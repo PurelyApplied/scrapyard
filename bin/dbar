@@ -1,0 +1,33 @@
+# A work quick-script
+if [ $# -ne 1 ] ;
+then
+    echo "mpirun -n $N_Threads $Host $Other_mpi main.x -n $N --num-rand-seeds $Seeds -d $Duration -b $Beta $Generator $Other" 1>&2
+    mpirun -n $N_Threads $Host $Other_mpi main.x -n $N --num-rand-seeds $Seeds -d $Duration -b $Beta $Generator $Other
+else
+    echo "Caching parameters:"
+    echo "
+Host='$Host'
+N_Threads='$N_Threads'
+Other_mpi='$Other_mpi'
+N='$N'
+Seeds='$Seeds'
+Duration='$Duration'
+Beta='$Beta'
+Generator='$Generator'
+Other='$Other'
+"
+    
+    echo "
+Host='$Host'
+N_Threads='$N_Threads'
+Other_mpi='$Other_mpi'
+N='$N'
+Seeds='$Seeds'
+Duration='$Duration'
+Beta='$Beta'
+Generator='$Generator'
+Other='$Other'
+" > ~/bin/.foo$1
+
+    chmod +x ~/bin/.foo$1
+fi

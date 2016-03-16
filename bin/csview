@@ -1,0 +1,2 @@
+# This should be bash function'd in .bash_alias, not bin'd
+column -s, -t | less -S

@@ -1,0 +1,13 @@
+WORRY1=`free -h`
+WORRY2=`top -bn1 | head -n 20`
+WORRY3=`df -h`
+if [ $# -ne 0 ] ; then clear; fi ;
+echo "$WORRY1"
+echo ""
+echo "--------------------"
+echo ""
+echo "$WORRY2"
+echo ""
+echo "--------------------"
+echo ""
+echo "$WORRY3"

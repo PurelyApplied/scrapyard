@@ -1,0 +1,7 @@
+if [ $# -le 1 ] ;
+then
+    echo "Call: timer [Delay] [Announcement]"
+else
+    sleep $1
+    notify-send "$2" -t 60000
+fi

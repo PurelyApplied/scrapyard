@@ -1,0 +1,64 @@
+while getopts :yY opt; do
+    case $opt in
+        [yY])
+            echo "Assuming yes for all prompts"
+            YES_ALL=1
+            ;;
+        \?)
+            echo "Invalid argument $OPTARG."
+            exit 1
+            ;;
+        *)
+            echo "Unexpected return value from getopts"
+            exit 2
+            ;;
+        :)
+            echo "Option -$OPTARG requires argument"
+            ;;
+    esac
+done
+
+echo "Starting pidgin, audacious, and chrome; mounting Windows partition..."
+# Laptop specific:
+if [ ! $YES_ALL ] ; then
+    printf "Mount Windows partition? (y/n) >> "
+    read MOUNT
+else
+    MOUNT="y"
+fi
+
+if [ $MOUNT == "y" ]; then
+  mount_win
+fi
+# end Laptop specific
+
+# Laptop specific:
+echo "Load monitor preset?  Options available:"
+ls ~/.screenlayout
+printf "(Enter preset filename, or press ENTER) >> "
+read MOUNT
+if [ -f ~/.screenlayout/$MOUNT ]; then
+  /home/maiq/.screenlayout/$MOUNT
+fi
+# end Laptop specific
+
+#if pgrep pidgin &> /dev/null ; then
+  echo "pidgin already running."
+#else
+  echo "Starting pidgin..."
+  pidgin &> /dev/null &
+#fi
+
+if pgrep chrome &> /dev/null ; then
+  echo "chrome already running."
+else
+  echo "Starting chrome..."
+  google-chrome &> /dev/null &
+fi
+
+if pgrep audacious &> /dev/null ; then
+  echo "audacious already running."
+else
+  echo "Starting audacious..."
+  audacious &> /dev/null &
+fi

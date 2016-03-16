@@ -1,0 +1,16 @@
+if [ $# -lt 1 ] ;
+then
+    echo "Call threadparse filename [N_lines=10] [N_threads=2] [N_tail=N_lines]"
+else
+    if [ ! -e $1 ] ; then echo "Filename '$1' does not exist." ; exit 1 ; fi
+    FILENAME=$1
+    if [ $# -ge 2 ] ; then NL=$2 ; else NL=10  ; fi
+    if [ $# -ge 3 ] ; then NT=$3 ; else NT=2   ; fi
+    if [ $# -ge 4 ] ; then NI=$4 ; else NI=$NL ; fi
+    for i in `seq 0 1 $NT`
+    do
+	    echo ""
+	    grep "Proc $i" $FILENAME | tail -n $NL
+    done
+    tail -n $NI $FILENAME
+fi

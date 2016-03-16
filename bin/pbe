@@ -1,0 +1,15 @@
+if [ $# -ne 1 ] ;
+then
+    echo "pbe TeXfile."
+    echo " Do not include an extention to the TeX file, but do include the period."
+    echo " Runs latex, bibtex, and pdflatex twice on the handed tex file, and displays it using evince."
+elif [ ! -e $1tex ] ;
+then
+        echo "Cannot find file ${1}tex"
+else
+    pdflatex $1tex &&
+    bibtex   $1aux &&
+    pdflatex $1tex &&
+    pdflatex $1tex &&
+    evince   $1pdf &
+fi

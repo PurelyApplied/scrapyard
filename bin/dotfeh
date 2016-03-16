@@ -1,0 +1,9 @@
+if [ $# -eq 0 ] ; then 
+   echo "Call `dotfeh dotfile [compiler=dot]`"
+   echo "Calls dot [or specified] on the file, calls feh on the output.  *png generated using -O."
+else
+   FILE=$1
+   if [ $# -lt 2 ] ; then COMP='dot' ; else COMP="$2" ; fi
+   $COMP -Tpng -O $FILE 
+   feh $FILE.png 
+fi

@@ -1,0 +1,2 @@
+# This should be alias'd, not bin'd
+notify-send "Ding!"

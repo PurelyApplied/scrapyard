@@ -1,0 +1,22 @@
+if [ $# -le 1 ] ;
+then
+    echo "Usage: hop start [step=1] stop [grainularity=1000]"
+    echo "Performs seq start stop step, using bc to allow decimals of with resolution of granularity."
+    exit 1
+fi
+
+start=$1
+if [ $# -eq 2 ] ; then step=1  ; else step=$2 ; fi
+if [ $# -eq 2 ] ; then stop=$2 ; else stop=$3 ; fi
+if [ $# -eq 4 ] ; then gran=$4 ; else gran=1000 ; fi
+
+List=""
+START=`echo "$start * $gran" | bc -l`
+STOP=`echo "$stop * $gran" | bc -l`
+STEP=`echo "$step * $gran" | bc -l`
+
+#echo "$start $stop $step $START $STOP $STEP"
+for i in `seq $START $STEP $STOP`
+do
+    echo "$i / $gran" | bc -l
+done

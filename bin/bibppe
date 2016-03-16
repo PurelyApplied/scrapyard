@@ -1,0 +1,14 @@
+if [ $# -ne 1 ];
+then
+    echo "Call 'bibppe filename.' neglecting the extention."
+fi
+
+if [ $# -eq 1 ] ;
+then
+    pdflatex $1tex &&
+    bibtex   $1tex &&
+    pdflatex $1tex &&
+    pdflatex $1tex &&
+    pdflatex $1tex &&
+    evince   $1pdf &
+fi

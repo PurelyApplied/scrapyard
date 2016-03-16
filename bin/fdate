@@ -1,0 +1,2 @@
+# This should be aliased, not bin'd
+date +"%y-%m-%d-%H-%M-%S"

@@ -1,0 +1,13 @@
+TAP1=`date +"%A %B %d%n%I:%M%n%n "`
+TAP2=`upower -d |\
+ grep -E "state|time|perc" |\
+ sed "s/^\s*/\t/g" |\
+ sed "s/state:/state:\t\t/g" |\
+ sed "s/time(.*):\s*/time$1:\t/g"|\
+ sed "s/percentage:\s*/percentage:\t\t/g"`
+if [ $DISPLAY ] ;
+then 
+  notify-send "$TAP1 $TAP2"
+else
+  echo "$TAP1 $TAP2"
+fi

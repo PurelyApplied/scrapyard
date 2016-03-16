@@ -1,0 +1,2 @@
+# This should be aliased instead of bin'd
+sudo shutdown now -P

@@ -1,0 +1,26 @@
+if [ $# -ne 1 ] ;
+then
+    echo "Call with any one parameter to load some default values:"
+    echo "Make sure that foo / bar are aliased to run as '. dfoo' and '. dbar'"
+    alias | grep -E "foo|bar"
+else
+    . ~/bin/.foo$1
+fi
+
+echo "
+Host='$Host'
+N_Threads='$N_Threads'
+Other_mpi='$Other_mpi'
+N='$N'
+Seeds='$Seeds'
+Duration='$Duration'
+Beta='$Beta'
+Generator='$Generator'
+Other='$Other'
+"
+
+echo "bar will execute :
+  mpirun -n \$N_Threads \$Host \$Other_mpi main.x -n \$N --num-rand-seeds \$Seeds -d \$Duration -b \$Beta \$Generator \$Other"
+echo "currently :
+  mpirun -n $N_Threads $Host $Other_mpi main.x -n $N --num-rand-seeds $Seeds -d $Duration -b $Beta $Generator $Other"
+echo "Enter 'bar <S>' to save current loadout, to be loaded with 'foo <S>'" 

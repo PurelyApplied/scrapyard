@@ -1,0 +1,18 @@
+# Keeps comms open between servers, used to keep long-running
+# distributed processes from crashing.
+
+if [ $# -lt 2 ]
+then
+   echo "Call vtap [length of delay between taps] [space-seperated list of servers]"
+else
+   SLEEPTIME=$1
+   shift
+   while [ 1 ]
+   do
+      for v in $@
+      do
+         ssh $v uptime
+      done
+      sleep ${SLEEPTIME}s
+   done
+fi
