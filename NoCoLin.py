@@ -34,8 +34,6 @@ def recursive_step(sol, n, verbose=False):
     X_rem = [i for i in range(n) if not i in X_sol]
     Y_rem = [i for i in range(n) if not i in Y_sol]
     Pool = [(x,y) for x in X_rem for y in Y_rem]
-    # Remove some obvious violations
-    Pool = [point for point in Pool if point[0] != point[1]]
     random.shuffle(Pool)
     if verbose:
         print("Point pool:", Pool)
