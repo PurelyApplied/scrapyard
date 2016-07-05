@@ -25,7 +25,6 @@ def main(grid=None):
                                                                      best_start[1] if best_start else "NULL",
                                                                      best_score))
                 last_best_score = best_score
-        
             (x, y), (dx, dy) = choice(list(firing_options))
             # print("Starting at ({}, {}), aiming along ({}, {})".format(x, y, dx, dy))
             x, y, dx, dy = get_starting_pos(grid, x, y, dx, dy)
