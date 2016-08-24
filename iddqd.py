@@ -11,9 +11,9 @@ _obstacle = "O"
 _beam = "@"
 _empty = "."
 
-def main(grid=None):
+def main(grid=None, rand_graph_args = (10, 10, 10, 10)) -> "grid, best_start":
     if not grid:
-        grid = make_random_test(10, 10, 10, 10)
+        grid = make_random_test(*rand_graph_args)
     firing_options = get_options(grid)
     best_start = None
     best_score = -1
@@ -21,9 +21,10 @@ def main(grid=None):
     while firing_options:
         try:
             if last_best_score < best_score and 0 < best_score:
-                print("Current best from {} along {} hits {}".format(best_start[0] if best_start else "NULL",
-                                                                     best_start[1] if best_start else "NULL",
-                                                                     best_score))
+                print("Current best from {} along {} hits {}".format(
+                    best_start[0] if best_start else "NULL",
+                    best_start[1] if best_start else "NULL",
+                    best_score))
                 last_best_score = best_score
             (x, y), (dx, dy) = choice(list(firing_options))
             # print("Starting at ({}, {}), aiming along ({}, {})".format(x, y, dx, dy))
@@ -40,7 +41,8 @@ def main(grid=None):
                 x += dx
                 y += dy
         except KeyboardInterrupt:
-            print("\n{} potential firing options remain...".format(len(firing_options)))
+            print("\n{} potential firing options remain...".format(
+                len(firing_options)))
             try:
                 input("Interrupt with C-c C-c again to quit, or press ENTER to continue. ")
             except KeyboardInterrupt:

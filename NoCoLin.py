@@ -1,9 +1,10 @@
 '''Brute force search for the following problem: given an N x N
-coordinate, choose N points such that no two points share a
-horizontal, vertical, or diagonal line.  This problem which stumped my
-girlfriend and I in its 8x8 incarnation at OMSI.  This implementation
-is recursive, and not efficiently so.  Not recommended for problems of
-size N>10.
+coordinate grid, choose N points such that no two points share a
+horizontal, vertical, or diagonal line.
+
+This problem stumped my girlfriend and I in its 8x8 incarnation at
+OMSI.  This implementation is recursive, and not efficiently so.  Not
+recommended for problems of size N>10.
 
 '''
 import random

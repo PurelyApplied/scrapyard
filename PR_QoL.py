@@ -52,10 +52,6 @@ def explicit(f):
         reqs = f.__annotations__
         for i in range(len(args)):
             name = arg_names[i]
-            #print("Arg name:", name)
-            #print("Name in req? ", name in reqs)
-            #print("Type of arg:", type(args[i]))
-            #print("Required:", reqs.get(arg_names[i], None))
             assert not name in reqs or type(args[i]) == reqs[arg_names[i]], (
                 "Argument {} of type {}; type {} required by @explicit.".format(
                     name, type(args[i]), reqs[arg_names[i]])
