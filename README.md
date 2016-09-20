@@ -19,3 +19,12 @@ are self-explanatory.
 
   --- | ---
   iddqd.py | a linear maximal covering problem, brute forced.
+
+
+This is a lie
+
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
