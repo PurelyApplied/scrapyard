@@ -72,8 +72,7 @@ class ExplicitError(Exception):
     pass
 
 def explicit(f):
-    '''Enforces strong typing, according to function's annotation.  *args
-    and **kwargs ignored.'''
+    '''Enforces strong typing, according to function's annotation.'''
     # (f_args, f_vargs, f_kwargs, defaults,
     #  kwonlyargs, kwonlydefs, annotations) = inspect.getfullargspec(f)
     arg_names, req_type = inspect.getfullargspec(f)[0:7:6]
@@ -116,34 +115,26 @@ def explicit(f):
     return wrapper
 
 
-# This needs updating
 def implicit(f):
-   @wraps(f)
-   def wrapper(*args, **kwargs):
-        arg_names = list(inspect.signature(f).parameters)
-        reqs = f.__annotations__
-        new_kwargs = {
-            arg_names[i] : args[i]
-            if not arg_names[i] in reqs
-            else reqs[arg_names[i]](args[i])
-           for i in range(len(args))
-        }
-        new_kwargs.update({
-            name : value
-            if not name in reqs
-            else reqs[name](value)
-            for name, value in kwargs.items()
-        })
-        r = f(**new_kwargs)
-        if "return" in reqs:
-            assert type(r) == reqs["return"], (
-               "Return value of type {}; type {}"
-               " required by @explicit.".format(
-                  type(r), reqs["return"] ) )
-        return r
-   wrapper.__doc__ += (
-      "\n\nThis function casts to aderence to the annotated typing.")
-   return wrapper
+    '''Enforces implicit typing, attempting to cast parameters according
+    to function's annotation.
+
+    '''
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        arg_names, req_type = inspect.getfullargspec(f)[0:7:6]
+        r = f(*(args[i]
+                if i >= len(arg_names) or arg_names[i] not in req_type
+                else req_type[arg_names[i]](args[i])
+                for i in range(len(args))),
+              **{name : arg
+                 if name not in req_type
+                 else req_type[name](arg)
+                 for name, arg in kwargs.items()})
+        return r if "return" not in req_type else req_type["return"](r)
+    wrapper.__doc__ += (
+        "\n\nThis function casts to aderence to the annotated typing.")
+    return wrapper
 
 
 #####
@@ -151,25 +142,31 @@ def implicit(f):
 
 @explicit
 def test(w, x:int, y:str = "butts", z=10, *args, **kwargs) -> str:
-    '''This is test's docstring'''
+    '''@explicit test function'''
     print("In test: x", x, "y", y, "z", z)
     print("args:", args)
     print("kwargs:", kwargs)
     return "returned value"
 
 
-# This fails with the args:
 @implicit
-def test2(x:int, *args):
-    '''You're a butt'''
-    print("Type:", type(x))
-    print("Test A:", args)
-    pass
+def test2(x:int, *args, **kwargs):
+    '''@implicit test function'''
+    print(x)
+    print(args)
+    print(kwargs)
+    return 5
 
 
-#@twyn
-def test3(a:int, b, c, d=4, **kwargs):
-    '''A docstring!'''
+@twyn
+def test3(a:int, b, c, d=4):
+    '''@twyn test function'''
     print("Got some args!")
     print(a, b, c, d)
-    print(kwargs)
+    
+
+def twyn_test_in():
+    return { "a" : 5,
+             "b" : "2",
+             "c" : "three",
+             "e" : 99}
