@@ -5,10 +5,12 @@ are self-explanatory.
 
 | File   | Description. |
 | -----  | ----- |
-| qol.py | my Quality of Life adjustments. |
-| NoCoLin.py | brute force solver for a puzzle that stumped my girlfriend and me at OMSI. |
-| elo_changes_wrt_different/* | generate curves for the amount of Elo rating risked, based on difference between a player's rating and their oppoent. |
 | bin/* | My ~/bin folder; BASH scripts. |
+| elo_changes_wrt_different/* | generate curves for the amount of Elo rating risked, based on difference between a player's rating and their oppoent. |
+| dailyprogrammer/* | /r/dailyprogrammer responces, detailed below. |
+| learningpython/*  | Code written for /r/learningpython mentoring, detailed below. |
+| NoCoLin.py | brute force solver for a puzzle that stumped my girlfriend and me at OMSI. |
+| qol.py | my Quality of Life adjustments. |
 
 ###/r/learningpython:
 
