@@ -3,7 +3,7 @@ are self-explanatory.
 
 ###Misc. items:
 
-| File   | Desc. |
+| File   | Description. |
 | -----  | ----- |
 | qol.py | my Quality of Life adjustments. |
 | NoCoLin.py | brute force solver for a puzzle that stumped my girlfriend and me at OMSI. |
@@ -12,19 +12,13 @@ are self-explanatory.
 
 ###/r/learningpython:
 
---- | ---
-blackjack.py | an example of a blackjack terminal game.
+| File  | Description. |
+| ----- | --- |
+| blackjack.py | an example of a blackjack terminal game. |
 
 ###/r/dailyprogrammer:
 
---- | ---
-iddqd.py | a linear maximal covering problem, brute forced.
+| File   | Description. |
+| --- | --- |
+| iddqd.py | a linear maximal covering problem, brute forced. |
 
-
-This is a lie
-
-| Tables        | Are           | Cool  |
-| ------------- |:-------------:| -----:|
-| col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
