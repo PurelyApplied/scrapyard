@@ -3,13 +3,13 @@ are self-explanatory.
 
 ###Misc. items:
 
-  qol.py| my Quality of Life adjustments.
-  NoCoLin.py| brute force solver for a puzzle that stumped my
-  girlfriend and me at OMSI.
-  elo_changes_wrt_different/* | generate curves for the amount of Elo
+  |qol.py| my Quality of Life adjustments.|
+  |NoCoLin.py| brute force solver for a puzzle that stumped my
+  girlfriend and me at OMSI.|
+  |elo_changes_wrt_different/* | generate curves for the amount of Elo
   rating risked, based on difference between a player's rating and
-  their oppoent.
-  bin/* | My ~/bin folder; BASH scripts.
+  their oppoent.|
+  |bin/* | My ~/bin folder; BASH scripts.|
 
 ###/r/learningpython:
 
