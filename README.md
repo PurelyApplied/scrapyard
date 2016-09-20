@@ -5,15 +5,17 @@ are self-explanatory.
 
   | File | Desc. |
   | ----- | ----- |
-  |qol.py| my Quality of Life adjustments.|
-  |NoCoLin.py| brute force solver for a puzzle that stumped my girlfriend and me at OMSI.|
-  |elo_changes_wrt_different/* | generate curves for the amount of Elo rating risked, based on difference between a player's rating and their oppoent.|
-  |bin/* | My ~/bin folder; BASH scripts.|
+  | qol.py | my Quality of Life adjustments. |
+  | NoCoLin.py | brute force solver for a puzzle that stumped my girlfriend and me at OMSI. |
+  | elo_changes_wrt_different/* | generate curves for the amount of Elo rating risked, based on difference between a player's rating and their oppoent. |
+  | bin/* | My ~/bin folder; BASH scripts. |
 
 ###/r/learningpython:
 
+  --- | ---
   blackjack.py | an example of a blackjack terminal game.
 
 ###/r/dailyprogrammer:
 
-  iddqd.py| a linear maximal covering problem, brute forced.
+  --- | ---
+  iddqd.py | a linear maximal covering problem, brute forced.
