@@ -1,0 +1,21 @@
+if [ $# -ne 1 ] ;
+then
+    echo "raise_line_three [filename]"
+    echo "prints the file, with line 3 raised one line."
+    echo "Hackjob fix to raise graph attributes from subcluster to containing graph."
+elif [ ! -e $1 ] ;
+then
+    echo "File $1 not found."
+else
+    FILE=$1
+    # Line 1
+    head -n1 $FILE
+    # Line 3
+    head -n3 $FILE | tail -n1
+    # Line 2
+    head -n2 $FILE | tail -n1
+    # The rest
+    LEN=$(cat $FILE | wc -l) # done with piping to avoid filename in LEN
+    LEN=$(($LEN - 3))
+    tail -n $LEN $FILE
+fi

@@ -1,4 +1,3 @@
-# A work quick-script
 if [ $# -ne 1 ] ;
 then
     echo "mpirun -n $N_Threads $Host $Other_mpi main.x -n $N --num-rand-seeds $Seeds -d $Duration -b $Beta $Generator $Other" 1>&2

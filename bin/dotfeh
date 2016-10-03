@@ -1,5 +1,5 @@
 if [ $# -eq 0 ] ; then 
-   echo "Call `dotfeh dotfile [compiler=dot]`"
+   echo "Call: dotfeh dotfile [compiler=dot]"
    echo "Calls dot [or specified] on the file, calls feh on the output.  *png generated using -O."
 else
    FILE=$1

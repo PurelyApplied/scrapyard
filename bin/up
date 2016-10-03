@@ -1,8 +1,46 @@
-while getopts :yY opt; do
+MOUNT="n"
+PIDGIN="n"
+CHROME="n"
+AUDACI="n"
+
+while getopts :yYpPcCmMuUaAhxX opt; do
     case $opt in
-        [yY])
-            echo "Assuming yes for all prompts"
-            YES_ALL=1
+        [mM])
+            echo "Mount prompt assumed \"yes\""
+            MOUNT="y"
+            ;;
+        [pP])
+            echo "Starting Pidgin"
+            PIDGIN="y"
+            ;;
+        [cC])
+            echo "Starting Chrome"
+            CHROME="y"
+            ;;
+        [uU])
+            echo "Starting Audacious"
+            AUDACI="y"
+            ;;
+        [aA])
+            echo "Starting chrome, audacious, and pidgin."
+            MOUNT="y"
+            PIDGIN="y"
+            CHROME="y"
+            AUDACI="y"
+            ;;
+        [xX])
+            echo "Setting xbacklight =70"
+            xbacklight =70
+            ;;
+        h)
+            echo "Prompts for arandr script input.  Will also optionally boot programs."
+            echo "Run with options:"
+            echo "[m|mount Windows partition]"
+            echo "[c|Start Chrome]"
+            echo "[p|Start Pidgin]"
+            echo "[u|Start Audacious]"
+            echo "[a| equal to -mcpu]"
+            exit 3
             ;;
         \?)
             echo "Invalid argument $OPTARG."
@@ -18,13 +56,10 @@ while getopts :yY opt; do
     esac
 done
 
-echo "Starting pidgin, audacious, and chrome; mounting Windows partition..."
 # Laptop specific:
-if [ ! $YES_ALL ] ; then
+if [ $MOUNT != "y" ] ; then
     printf "Mount Windows partition? (y/n) >> "
     read MOUNT
-else
-    MOUNT="y"
 fi
 
 if [ $MOUNT == "y" ]; then
@@ -42,23 +77,23 @@ if [ -f ~/.screenlayout/$MOUNT ]; then
 fi
 # end Laptop specific
 
-#if pgrep pidgin &> /dev/null ; then
+if pgrep pidgin &> /dev/null ; then
   echo "pidgin already running."
-#else
+elif [ $PIDGIN == "y" ] ; then
   echo "Starting pidgin..."
   pidgin &> /dev/null &
-#fi
+fi
 
 if pgrep chrome &> /dev/null ; then
   echo "chrome already running."
-else
+elif [ $CHROME == "y" ] ; then
   echo "Starting chrome..."
   google-chrome &> /dev/null &
 fi
 
 if pgrep audacious &> /dev/null ; then
   echo "audacious already running."
-else
+elif [ $AUDACI == "y" ] ; then
   echo "Starting audacious..."
   audacious &> /dev/null &
 fi

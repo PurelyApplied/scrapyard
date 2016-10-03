@@ -1,0 +1,44 @@
+if [ $# -lt 2 ] ;
+then
+    echo "announce_when_done [PID] [email address] [subject=Completion Announcement] [body=None] [sleep_seconds=5]"
+else
+    PID=$1
+    shift;
+    ADDRESS=$1
+    shift;
+    if [ $# -ne 0 ] ;
+    then
+        SUBJ=$1 ; shift ;
+    else
+        SUBJ="Completion Announcement" ;
+    fi
+    if [ $# -ne 0 ] ;
+    then
+        BODY=$1 ; shift ;
+    else
+        BODY="" ;
+    fi
+    if [ $# -ne 0 ] ;
+    then
+        SLEEP_FOR=$1 ; shift ;
+    else
+        SLEEP_FOR=5 ;
+    fi
+    
+    echo "PID: $PID"
+    echo "Address: $ADDRESS"
+    echo "SUBJ: $SUBJ"
+    echo "BODY: $BODY"
+    
+    RET_STATUS=0
+    while [ $RET_STATUS -eq 0 ] ;
+    do 
+        sleep $SLEEP_FOR
+        ps $PID
+        RET_STATUS=$?
+        
+    done
+
+    echo "$BODY" | mail -s "$SUBJ" $ADDRESS
+    #echo "I would email here."
+fi

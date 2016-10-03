@@ -7,7 +7,7 @@ elif [ ! -e $1tex ] ;
 then
         echo "Cannot find file ${1}tex"
 else
-    pdflatex $1tex &&
-    pdflatex $1tex &&
+    pdflatex $1tex
+    pdflatex $1tex
     evince $1pdf &
 fi

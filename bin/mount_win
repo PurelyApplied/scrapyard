@@ -1,6 +1,3 @@
-# Specific to my laptop: mounts the Windows partition, optionally with
-# write access
-
 printf "Attempt to mount with write access?  (y/n)>> "
 read INP
 # MOUNT_TO="/media/maiq/2482FEC082FE9610"

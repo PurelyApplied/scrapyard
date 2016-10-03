@@ -1,0 +1,11 @@
+if [ $# -ne 1 ] ; then
+    echo "call \"both [name]\" to open all files containing [name] in emacs"
+else
+    NAME=$1
+    ls -l *${NAME}*
+    printf "Open these files in emacs? (y/n) >> "
+    read OPEN
+    if [ $OPEN == "y" ] ; then
+        emacs *${NAME}* &
+    fi
+fi

@@ -5,10 +5,11 @@ fi
 
 if [ $# -eq 1 ] ;
 then
-    pdflatex $1tex &&
-    bibtex   $1tex &&
+    latex $1tex ;
+    bibtex   $1aux ; 
     pdflatex $1tex &&
     pdflatex $1tex &&
     pdflatex $1tex &&
     evince   $1pdf &
+    echo "Opening ${1}pdf"
 fi

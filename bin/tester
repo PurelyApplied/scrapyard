@@ -1,0 +1,23 @@
+ls *$1* -l
+printf "Map: (Enter for mapper.py)"
+read MAP
+if [ ! $MAP ] ; then MAP="mapper.py" ; fi
+
+printf "Red: (Enter for reducer.py)"
+read RED
+if [ ! $RED ] ; then RED="reducer.py" ; fi
+
+printf "Inp (Enter for input.txt): "
+read INP
+if [ ! $INP ] ; then INP="input.txt" ; fi
+
+python *$1*$MAP < $INP 2> map_err | sort > test_map
+python *$1*$RED < test_map 2> red_err | sort > test_out
+
+more test_map
+printf "Press ENTER" ; read NO
+
+more test_out
+printf "Press ENTER" ; read NO
+
+diff sol test_out -y
