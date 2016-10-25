@@ -1,17 +1,19 @@
-printf "Attempt to mount with write access?  (y/n)>> "
-read INP
-# MOUNT_TO="/media/maiq/2482FEC082FE9610"
+# printf "Attempt to mount with write access?  (y/n)>> "
+# read INP
+MOUNT_TO="/media/maiq/2482FEC082FE9610"
+MOUNT_FROM="/dev/sda2"
 
-if [ $INP == "y" ]
-then OPT=""
-else OPT=",ro"
-fi
+# if [ $INP == "y" ]
+# then OPT=""
+# else OPT=",ro"
+# fi
 
 if [ ! -d $MOUNT_TO ] ; then
     sudo mkdir $MOUNT_TO
 fi
 
-COMMAND='sudo mount -t ntfs -o "uhelper=udisks2,nodev,nosuid,uid=1000,gid=1000,dmask=0077,fmask=0177$OPT" /dev/sda2 /media/maiq/2482FEC082FE9610'
+COMMAND="sudo mount -t ntfs $MOUNT_FROM $MOUNT_TO"
+#COMMAND='sudo mount -t ntfs -o "uhelper=udisks2,nodev,nosuid,uid=1000,gid=1000,dmask=0077,fmask=0177$OPT" /dev/sda2 /media/maiq/2482FEC082FE9610'
 
 echo $COMMAND
 $COMMAND
