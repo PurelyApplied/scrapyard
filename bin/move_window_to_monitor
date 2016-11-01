@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-_xrandr_tmp = "/home/maiq/.movetmp"
+_xrandr_tmp = "/home/elrieve/.movetmp"
 import re, os, sys
 
 def main(moveto):
@@ -11,6 +11,7 @@ def main(moveto):
     comm = "xdotool windowmove {} {} {}".format(winID, x, y)
     print("Doing: {}".format(comm))
     os.system(comm)
+
     
 def parse_xrandr(filename, moveto):
     assert moveto > 0, "Use a 1-indexing of monitors"
@@ -22,6 +23,7 @@ def parse_xrandr(filename, moveto):
             if match:
                 found.append( (match.group(1), match.group(2)))
     return found[moveto-1]
+
 
 if __name__=="__main__":
     print(sys.argv)
