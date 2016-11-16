@@ -15,39 +15,48 @@ def answer(start, length):
 
     '''
 
-    # edge case
+    ## Handle the edgecase
     if length == 1:
         return start
-    # build bitmask
+    ## Identify leading constant bits, build bitmask
     last = start + length**2 - length + 1
     b_last = bin(last)[2:]
     b_start = bin(start)[2:]
+    # pad with zeros to the starting binary string so lengths match.
     b_start = "0"*(len(b_last) - len(b_start)) + b_start
+    # identify number of bits that will change between start and last
     important_bits = 0
     for i in range(len(b_last)):
         if b_last[-i] != b_start[-i]:
             important_bits = i
+    # create the bitmask and adjust the start to compensate
     mask = 1
     for i in range(important_bits):
         mask = mask<<1 | 1
     original_start = start
     start &= mask
+    ## Begin XOR checksums.  Begin with either 0 or original start value...
     # The number of terms follows triangular numbers, odd for length=1
     # (2, 5, 6, 9, 10...)
     checksum = start ^ original_start if length % 4 in (1, 2) else 0
+    # Begin working through each row
     for row in range(length):
         row_start = start + row * length
         pos = 0
         while pos < length - row:
             value = row_start + pos
-            # how many trailing zeros?
-            # boundary case: bin(0) has "many" zeros
+            # Identify number of trailing zeros and maximum jump size
             n_zeros = len(bin(value)) - len(bin(value).rstrip('0')) if value else 64
             max_step = length - row - pos
-            # determine largest permissible jump, in bits
             jump = n_zeros
             while jump and 1<<jump > max_step:
                 jump -= 1
+            # Three cases:
+            # - No jump: make XOR and take step
+            # - One jump: every bit exists twice, except the least
+            #   bit, which hits zero and one.  Yields XOR against 1
+            # - Higher jump: equivalent to XOR against zero, yielding
+            #   no change.
             if jump == 0:
                 checksum ^= value
                 pos += 1
