@@ -1,4 +1,4 @@
-echo "Confirm or add options, or C-c to cancel: rm ./*aux ./*log ./*dvi ./*toc ./*~"
+COMMAND="rm $OPTS ./*aux ./*log ./*dvi ./*toc ./*out"
+printf "Confirm or add options, or C-c to cancel: $COMMAND "
 read OPTS
-
-rm $OPTS ./*aux ./*log ./*dvi ./*toc
+$COMMAND $OPTS
