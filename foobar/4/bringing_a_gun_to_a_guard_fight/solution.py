@@ -1,13 +1,26 @@
+from pprint import pprint
 import math
 from itertools import product
 from operator import mul, add, sub
+from fractions import gcd
 
 # Current errors: I need to account for a gap space in the wall.
 # Currently, I'm jumping "around" the wall rather than bouncing off
 # it, going (2, 1, -1, -2) and not hitting 0.  Although, incidentally,
 # this shouldn't? change the raw count of beams...
 
+# Current error: The (1, 1) (2, 1) example has attacks along (-1, 0)
+# and other (-1, *).  How can I forbid "grazing" myself?
+
 # verification currently spits out two failures.  Double check edgecases.
+
+# It appears firing directly into a wall to make a bank shot in the
+# (1, 1) (2, 1) example is illegal.
+
+# Using Fraction will cause vectors (1, 1) and (-2, -2) to identify.
+# Only convert to Fraction when making the over-lay comparison, with
+# some added footwork to check signage.
+
 
 
 # Dimensions bound 1 < dim < 1000
@@ -41,6 +54,7 @@ from operator import mul, add, sub
 #   so long as there exists no self-reflected coordinate s=(dx2,
 #   dy2, dist2) such that (dx1, dy1) == (dx2, dy2) and dist2 < dist1
 
+
 def answer(dimensions, my_position, guard_position, distance):
     ## Provided positions are 1-indexed.  We adjust internally to be
     ## zero-indexed
@@ -51,20 +65,26 @@ def answer(dimensions, my_position, guard_position, distance):
     guard_reflections = get_reflections(dimensions, my_position,
                                         guard_position, distance)
     beams_map = {}
+    
     # Identify each angle and keep the "closest" guard.
-    for dx, dy, r, tx, ty in map(lambda x : to_polar(my_position, x),
+    for dx, dy, r in map(lambda x : to_polar(my_position, x),
                          guard_reflections):
-        if (dx, dy) not in beams_map or r < beams_map[(dx, dy)]:
-            beams_map[(dx, dy)] = (r, tx, ty)
+        beam = (dx, dy)
+        if beam not in beams_map or r < beams_map[beam]:
+            print("Adding {!r}:{} to beams.  Previous value: {}".format(
+                beam, r, beams_map.get(beam, None)))
+            beams_map[beam] = r
+
     # Don't shoot yourself.
-    for dx, dy, r, tx, ty in map(lambda x : to_polar(my_position, x),
+    for dx, dy, r in map(lambda x : to_polar(my_position, x),
                          my_reflections):
-        if (dx, dy) in beams_map and r < beams_map[(dx, dy)][0]:
-            print("Removing {!r}: would hit me first.".format((dx, dy, r)))
-            beam_map.pop((dx, dy))
+        key = (dx, dy)
+        if key in beams_map and r < beams_map[key]:
+            print("Removing {!r}: would hit me first.".format(key))
+            beams_map.pop(key)
     return beams_map
 
-
+    
 def get_reflections(dimensions, my_position, target_position, distance):
     '''Returns the coordinates of reflected position within (Euclidean)
 distance'''
@@ -79,19 +99,27 @@ distance'''
         if iy % 2:
             here_y = dimensions[1] - here_y - 1
         # Account for reflections
-        shift = tuple(map(mul, (ix, iy), dimensions))
+        shift = tuple(map(sub, (ix, iy),
+                          map(mul, (ix, iy), dimensions)))
         here_x, here_y = map(add, shift, (here_x, here_y))
         if euclid_distance(my_position, (here_x, here_y)) <= distance:
             reflections_list.append((here_x, here_y))
     return reflections_list
 
+
 def euclid_distance(p1, p2):
     return math.sqrt(sum(map(lambda x : x**2, map(sub, p1, p2))))
 
+
 def to_polar(origin, position):
     dx, dy = map(sub, position, origin)
+    if dx == dy == 0:
+        return 0, 0, 0
+    common = gcd(abs(dx), abs(dy))
+    dx, dy = map(lambda x : x // common, (dx, dy))
     r = euclid_distance(origin, position)
-    return dx, dy, r, position[0], position[1]
+    # Avoid collision on vectors
+    return dx, dy, r
 
 
 def test1():
@@ -105,8 +133,10 @@ def test1():
     distance = 4
     ans = answer(dimensions, cap_pos, bad_pos, distance)
     print(len(ans))
+    pprint(sorted(ans.items()))
     return ans
-    
+
+
 def test2():
     dimensions = [300, 275]
     cap_pos = [150, 150]
@@ -114,5 +144,6 @@ def test2():
     distance = 500
     ans = answer(dimensions, cap_pos, bad_pos, distance)
     print(len(ans))
+    pprint(sorted(ans.items()))
     return ans
     
