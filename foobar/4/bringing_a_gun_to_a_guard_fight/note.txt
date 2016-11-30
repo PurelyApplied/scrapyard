@@ -1,0 +1,5 @@
+I'm pretty sure this problem is malformed.  Rebounding appears to
+occur on the point "before" the wall, but it seems which vectors are
+safe and which are not are arbitrarily chosen.
+
+Whatever, Google.  We had some laughs.

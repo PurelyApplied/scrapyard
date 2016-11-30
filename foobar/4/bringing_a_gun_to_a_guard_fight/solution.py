@@ -147,3 +147,25 @@ def test2():
     pprint(sorted(ans.items()))
     return ans
     
+
+# +---+
+# |...|
+# |yg.|
+# +---+
+
+
+# room [3, 2],
+# you_position [1, 1],
+# guard_position [2, 1],
+# and a maximum shot distance of 4,
+
+# vectors:
+# [1, 0],
+# [1, 2],
+# [1, -2],
+# [3, 2],
+# [3, -2],
+# [-3, 2],
+# [-3, -2].
+
+# As specific examples, the shot at bearing [1, 0] is the straight line horizontal shot of distance 1, the shot at bearing [-3, -2] bounces off the left wall and then the bottom wall before hitting the elite guard with a total shot distance of sqrt(13), and the shot at bearing [1, 2] bounces off just the top wall before hitting the elite guard with a total shot distance of sqrt(5).
