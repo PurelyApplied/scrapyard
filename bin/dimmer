@@ -1,0 +1,16 @@
+if [ $# -lt 1 -o $# -gt 2 ] ; then
+    echo "Usate: dimmer [rate] [delay=0.25s]"
+    echo "Specify + or - in rate."
+    echo "Keyboard interrupt to end."
+    exit 1
+fi
+
+step=$1
+if [ $# -eq 2 ] ; then delay=$2 ; else delay=0.25s ; fi
+
+while [ true ] ; do
+    xbacklight $step
+    sleep $delay
+done
+
+
