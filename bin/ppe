@@ -1,13 +1,31 @@
 if [ $# -ne 1 ] ;
 then
-    echo "ppe TeXfile."
-    echo " Do not include an extention to the TeX file, but do include the period."
-    echo " Runs pdflatex twice on the handed tex file, and displays it using evince."
-elif [ ! -e $1tex ] ;
-then
-        echo "Cannot find file ${1}tex"
-else
+    usage
+    exit 1
+fi
+
+
+fname=$1
+
+do-ppe () {
     pdflatex $1tex
     pdflatex $1tex
     evince $1pdf &
+}
+
+usage () {
+    echo "ppe TeXfile."
+    echo " Runs pdflatex twice on the handed tex file, and displays it using evince."
+    echo " Do not include an extention to the TeX file"
+}
+
+
+
+if [ -e ${fname}tex ] ; then
+    do-ppe ${fname}
+elif [ -e ${fname}.tex ] ; then
+    do-ppe ${fname}.
+else
+    echo "Cannot find ${fname}tex or ${fname}.tex"
+    exit 1
 fi

@@ -1,4 +1,4 @@
-COMMAND="rm $OPTS ./*aux ./*log ./*dvi ./*toc ./*out"
+COMMAND="rm $OPTS ./*.aux ./*.log ./*.dvi ./*.toc ./*.out ./*.glo ./.*ist ./*~ ./*.lot ./*.lof ./*.ist ./*.ist ./*.glsdefs ./*.blg ./*.bbl ./*.loa"
 printf "Confirm or add options, or C-c to cancel: $COMMAND "
 read OPTS
 $COMMAND $OPTS
