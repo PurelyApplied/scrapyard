@@ -1,0 +1,215 @@
+% http://pre14.deviantart.net/7a89/th/pre/i/2011/289/4/8/the_blue_silence_by_koaltaitemaunga-d4czpeo.png
+
+\documentclass{article}
+
+% \usepackage{amssymb,amsmath,amsthm}
+\usepackage[left=0.3 in,top=0.5in,right=0.3in,nohead]{geometry}
+\usepackage{hyperref} % makes ToC clickable
+\usepackage{eso-pic} % allows background picture patterning
+\usepackage{graphicx} % \includegraphics
+
+% Common
+\newcommand{\ds}{\displaystyle}
+\newcommand{\bit}{\begin{itemize}}
+\newcommand{\eit}{\end{itemize}}
+\newcommand{\lp}{\left(}
+\newcommand{\rp}{\right)}
+\newcommand{\ddt}{\frac{d}{dt}}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+
+\usepackage{color} % Color red DM only stuff
+\usepackage{fancyhdr} % Footnote the date
+\usepackage{multicol} % 2-column
+% \dmtrue
+
+\definecolor{tan}{RGB}{88, 66, 22}
+\definecolor{req}{RGB}{146, 110, 22}
+\newcommand{\action}[2]{\paragraph*{{\color{tan}#1}} (DC #2)\newline}
+\newcommand{\success}{\subparagraph*{{\color{tan}Upon Success:}}}
+\newcommand{\failure}{\subparagraph*{{\color{tan}Upon Failure:}}}
+\newcommand{\note}{\subparagraph*{{\color{tan}Note:}}}
+\newcommand{\attuned}{ {\em \color{req} This action is used in conjunction with casting a spell as an action on this turn.} }
+
+\setlength\parindent{0.1in}
+\begin{document}
+\AddToShipoutPictureBG{
+  \includegraphics{../parchment-paper-light-texture.png}
+}
+
+
+{\it ``Can you feel the peace of this grove, Bae'win?  The generations of Druids who have tended to these woods, to the world?  Their souls may have returned to the planes, but the outer planes are close here.  So does the power of their will, a will of preservation, protect this grove.  It is the perfect place for you to learn our ways.''}
+
+\smallskip
+
+\hrule
+\ 
+
+\smallskip
+
+{\it ``There's magic in everyone.  It normally takes a lifetime of training to do anything with it, but it's there.  Places like this, it's a bit closer to the surface.  You just have to reach out and... *Whumpf, flicker*... heh.  And there it is.''}
+
+\smallskip
+
+\hrule
+\ 
+
+\smallskip
+
+{\it ``Too much magic was used here too quickly.  It lingers, tearing at the fabric of reality.  But it is not the real threat, apprentice.  For as many wizards died during the wars of the Third Era, many more have died here in the centuries since.  What killed them was a refusal to remain humble.  We are servants of magic, child, not its master.  You would do well to remember that, lest your pride allow these energies to rip you asunder.}
+
+{\it ``Now, bring me my reagents.  We have work to do.''}
+
+\smallskip
+
+\hrule
+\ 
+
+\bigskip
+
+\begin{multicols}{2}
+
+  Areas of great magical power can be the boon of the clever and bane of the reckless.
+  These areas may exist at a convergence of ley lines, at the site of great magical battles, or at a place where a {\it Wish} spell has exposed the weave of magic in the Material Plane.
+  At these places, a creature has a chance to reach out to the magic of the location, powering spells not of their own strength, but of the world's.
+  
+  How an individual reacts to a place of magical power depends inherently on that individual's relationship with magic.
+  A wizard's or sorcerer's understanding of magic differs fundamentally from the powers granted to warlocks and clerics by otherworldly beings.
+  A place of magical power is more yielding to spellcasters.
+  Yet, it may not be accessible to all creatures with the {\it Spellcasting} feature, but rather only to those creatures with a feature of an appropriate kind.
+  A convergence of ley lines in a sacred grove may only be accessible to a Druid, whereas the power of an ancient and oft-used sacrificial altar may only be accessible to a Warlock.
+  Conversely, the exposed edges of the Weave caused by a {\it Wish} spell might be visible to all spellcasters.
+
+  In this way, a place of power is {\it attuned} to a particular type of magic.
+  Spells that appear on the appropriate spell lists are {\it attuned spells}.
+
+  A creature may spend a bonus action to perform any number of the following actions.
+  Multiple actions may be attempted, but all must be declared together.
+  Only one attempt may be made for any individual action, except as noted.
+  A creature may not, for instance, attempt {\it Unanchor Magic} twice in one bonus action.
+
+  All checks are made using {\it Intelligence (Arcana)} against the given DC.
+  
+  Any effect that calls for the spell's level treats cantrips as level zero.
+  
+  For any instance in which failure deals damage, failure by rolling a natural 1 should deal damage as if from a critical hit.
+
+  
+  
+  If multiple effects are attempted, attempt them in the order listed here.
+  Any failure that causes the spell to fizzle ends the action, denying all further checks.
+  Additionally, many actions directly influence a spell cast on this turn.
+  If failure during this bonus action causes the spell to fail, the action that would have cast the spell is also lost.
+  Such are the dangers of wielding volatile magics.
+  
+
+
+  \section*{Bonus Actions in Places of Power}
+
+  Magic is so readily available to those who would reach for it, even the uninitiated may bend it.
+  A player may use a bonus action to reach towards the weave of magic and attempt one of the following:
+
+\action{Unanchor Magic}{15}
+  A creature attempts to unanchor a spell sustained by {\it Magical Sustain} (below).
+\success
+  The spell ends immediately.
+\failure
+  The spellcaster unanchors themselves, floating slightly above the ground.
+  The spellcaster's movespeed is reduced to 5 ft for 1d4 rounds.
+
+\action{Magical Intuition}{10+}
+  A creature reaches into the surrounding magic, attempting to gain a magical intuition for spellcasting.
+  Select a spell attuned to the place of power.
+  Increase the DC of this check by the spell's level multiplied by 5.
+  If the creature has an atuned spellcasting level, reduce the DC of this check by that amount.
+  This action may only be taken once per short or long rest.
+\success
+  The chosen spell is considered known and prepared until the creature's next short or long rest.
+\failure
+  Torrents of magic flood the creature's mind.
+  The creature takes 2d6 psychic damage, with an additional 1d6 multiplied by the spell's level.
+  If not otherwise incapacitated, the creature is then stunned for 1d4 rounds.
+  For higher level spells, multiply the time stunned by the spell's level.
+\note
+  This action, with enough time and sufficient resources, would allow a dangerously quick expansion of spellbooks.
+  Such sites are sought for and battled over fiercely.
+
+\action{Magical Prowess}{20+}
+  \attuned
+  A creature attempts to cast a spell of the first level or higher using the ambient power instead of one of its own spell slots.
+  Increase the DC of this check by 5 for each level past the first of the slot that would be consumed.
+  This may allow a creature without the spellcasting feature to cast a spell of first level or higher.
+  This action may be taken twice if used in conjunction with {\it Mirror Spell}.
+\success
+  The spell does not consume a spell slot when cast.
+\failure
+  If the creature fails this check by 5 or more, or if the creature has no remaining spell slots of the correct level, the spell fizzles.
+  Otherwise, the spell resolves normally, consuming the appropriate spell slot.
+  
+  \section*{When used in conjunction with attuned spells}
+
+\action{Magical Sustain}{20}
+\attuned
+  A spellcaster attempts to weave a spell requiring concentration into the ambient magic to sustain the spell.
+\success
+  The spellcaster does not maintain concentration on this spell.
+  The DM makes a secret roll (1d20 - 10, with minimum 1) to determine the number of rounds the spell persists.
+  This spell is not controlled by the spellcaster, nor can it be freely dismissed.
+  Any effect that requires an action (i.e. later damage from {\it Witchbolt}) or other commands (i.e. direction for {\it Bigby's Hand}) chosen by the DM.
+
+\failure
+  The spell slot used to cast this spell is consumed.
+  The spell fizzles with no effect.
+  The DM makes a secret roll (1d20 - 10, with minimum 1); the spellcaster cannot cast a spell requiring concentration for this many rounds.
+
+\action{Empower Spell}{15 + spell's cast level}
+  \attuned
+  Drawing from ambient magics, a spell's strength is redoubled.
+\success
+  The spell resolves as if cast one level higher than the slot consumed.
+\failure
+  The spellcaster takes 1d6 + 1d6 per spell level of a damage.
+  If the spell cast deals damage, the caster receives damage of the same type.
+  If the spell does not deal damage, the DM chooses the type (Psychic or Force recommended).
+  If the DC was failed by less than 5, the spell is resolves, empowered as above.
+  If the DC was failed by 5 or more, the spell fizzles, consuming the spell slot.
+
+\action{Mirror Spell}{15 + spell's cast level}
+  \attuned
+
+  {\it
+   This action may only be used in conjunction with spells that require an attack roll.
+   If the spell would make multiple attacks, only one attack is mirrored.}
+
+  {\it This action not be used with spells that require concentration.}
+
+  A creature guides bends ambient magic to mirror its own spells.
+\success
+  The spellcaster casts this spell again, attacking a new target.
+  The spellcaster must expend spell slots to power both spells (that is, two spell slots if only this action was used, but only one if this is used with a successful {\it Magical Prowess}).
+  The spells must be cast at the same level.
+  A spellcaster may consume a higher-level spell slot if necessary, but doing so does not raise the level of the spell cast.
+\failure
+  The spellcaster casts this spell again, but must target themselves.
+  If this check was failed by less than 5, the spellcaster may instead choose to let both spells fizzle.
+  (Spell slots are still consumed and this round's action is lost.)
+
+\action{Mutate Spell}{10}
+  \attuned
+\success
+  The damage type of the spell cast may be changed to another type.
+\failure
+  The caster takes 2d6 damage of the intended damage type.
+  If the check is failed by 5 or more, the spell resolves with the original damage type.
+  Otherwise, the damage type is changed as intended.
+
+\end{multicols}
+\end{document}
+
+
+-----
+
+Some thoughts:
+
+  Some groups might not do well with the whole "Do as many of these as you want in one turn" mentality.
+  My group tends to be pretty low-risk; they might try to intuit a cantrip before a fight, but definitely not during one.
+ pretty conservative when it comes to 
