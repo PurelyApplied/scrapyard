@@ -1,7 +1,9 @@
-'''A "translation dictionary".  Internal counter increments upon any
+"""A "translation dictionary".  Internal counter increments upon any
 key access that the dictionary does not contain, assigning that key to
-the counter.'''
+the counter."""
 
+
+# noinspection PyStatementEffect
 class Translation(dict):
     def __init__(self, *args, read_args_as_key_value_pairs=False):
         super(Translation, self).__init__()
@@ -13,7 +15,7 @@ class Translation(dict):
         else:
             for k in args:
                 self[k]
-        
+
     def __missing__(self, key):
         if self._locked:
             raise KeyError("'{}' missing in locked translation.".format(key))
@@ -39,14 +41,14 @@ class Translation(dict):
         width = width or max(len(str(k)) for k in self)
         buff = ""
         if header:
-            buff += header.rstrip()+"\n"
+            buff += header.rstrip() + "\n"
         buff += ("# Note that this translation is zero-indexed,"
                  " which may not match a 1-indexed metis file. \n")
-        buff += ("#\n# <Original name> <Translated name> \n")
+        buff += "#\n# <Original name> <Translated name> \n"
         buff += ("\n".join(
             "{{:>{0}}} {{:>{0}}}".format(width).format(
                 k, v)
-            for k, v in sorted(self.items(), key=lambda x : x[1])))
+            for k, v in sorted(self.items(), key=lambda x: x[1])))
         buff += "\n"
         if filename is None:
             print(buff)
@@ -54,19 +56,19 @@ class Translation(dict):
             with open(filename, 'w') as o:
                 o.write(buff)
 
+
 def load_translation_file(filename, key_in_type=str, value_in_type=int):
     with open(filename) as f:
-        as_dict = {
-            key_in_type(line.split()[0])
-            : value_in_type(line.split()[1])
-            for line in f
-            if line.strip()
-            and not line.strip()[0] in ";%#"}
+        as_dict = {key_in_type(line.split()[0])
+                   : value_in_type(line.split()[1])
+                   for line in f
+                   if line.strip()
+                   and not line.strip()[0] in ";%#"}
     as_pairs = list(as_dict.items())
     as_translation = Translation(*as_pairs, read_args_as_key_value_pairs=True)
     as_translation.lock()
     return as_translation
-                           
-        
-def reverse(d : dict):
-    return {v : k for k, v in d.items()}
+
+
+def reverse(d: dict):
+    return {v: k for k, v in d.items()}

@@ -15,11 +15,11 @@ philosophy, but were useful in teaching myself about decorators.
 
 '''
 
-import os
-import sys
 import inspect
-from pprint import pprint
+import os
 from functools import wraps
+from pprint import pprint
+
 
 #####
 # A better repr; repr(callable) calls help(callable)

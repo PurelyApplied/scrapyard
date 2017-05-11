@@ -1,10 +1,12 @@
 import random
 
+
 # Partition, Community are just sets.
 # GroundTruth is a list of sets
+# noinspection SpellCheckingInspection
 class Partitioning:
-    def __init__(self, filename=None, n_parts=None):
-        '''self.part maps [thread] -> set of agents'''
+    def __init__(self, filename=None):
+        """self.part maps [thread] -> set of agents"""
         self.vert_to_part = {}
         self.part = {}
         if filename:
@@ -28,11 +30,11 @@ class Partitioning:
         return self.part[key]
 
     def load_from_file(self, filename):
-        '''Loads a partitioning from the given file.  Expects the format
+        """Loads a partitioning from the given file.  Expects the format
 <name> <tag> <partition>.  <tag> is discarded.  Ignores empty lines
 and any line beginning with [#;%], ignoring leading whitespace.
 
-        '''
+        """
         with open(filename) as f:
             for line in f:
                 if not line.strip() or line.strip()[0] in "#;%":
@@ -45,16 +47,15 @@ and any line beginning with [#;%], ignoring leading whitespace.
             self.part[p].add(v)
 
     def generate_random(self, n, k):
-        self.part = {i : set() for i in range(k)}
+        self.part = {i: set() for i in range(k)}
         for i in range(n):
-            self.part[random.randint(0, k-1)].add(i)
+            self.part[random.randint(0, k - 1)].add(i)
 
     def generate_bias_random(self, n, bias=0.5):
-        self.part = {i : set() for i in range(2)}
+        self.part = {i: set() for i in range(2)}
         for i in range(n):
             self.part[int(random.random() > bias)].add(i)
-        
-            
+
     def vertices(self):
         return len(self.vert_to_part) or sum(len(v) for v in self.part.values())
 
@@ -70,4 +71,3 @@ and any line beginning with [#;%], ignoring leading whitespace.
             self.part[i] = s
             for v in s:
                 self.vert_to_part[v] = s
-        
