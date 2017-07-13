@@ -41,15 +41,15 @@ def password_cracker(attempt, lst, dct, result_list, memo_list):
 
 
 if __name__ == "__main__":
-    T = int(input().strip())
+    T = int(input("Enter a number of tests: >> ").strip())
     attempts = []
     word_lists = []
     for ti in range(0, T):
-        N = int(input().strip())
+        N = int(input("Enter a number of words that you're about to fill out.  Use forethought!  >> ").strip())
         # ex: ["because", "can", "do", "must", "we", "what"]
-        word_lists.append(input().split(" "))
+        word_lists.append(input("Enter a list of words, separated by spaces: >> ").split(" "))
         # ex: "wedowhatwemustbecausewecan"
-        login_attempt = input().strip()
+        login_attempt = input("Enter an attempted password: >> ").strip()
         # ex: ["wedowhatwemustbecausewecan", "helloworld", "abcd"]
         attempts.append(login_attempt)
 
