@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 from functools import lru_cache
 
+
 @lru_cache(maxsize=None)
 def fib(n):
     assert isinstance(n, int) and n >= 0
     if n in (0, 1):
         return 1
-    return fib(n-1) + fib(n-2)
+    return fib(n - 1) + fib(n - 2)
 
 
 def dec_to_fib(n):
@@ -28,9 +29,9 @@ def dec_to_fib(n):
             as_fib += "0"
         i -= 1
     return as_fib
-        
+
 
 def fib_to_dec(n):
     return sum(fib(i)
                for i in range(len(n))
-               if n[-i-1] == "1")
+               if n[-i - 1] == "1")

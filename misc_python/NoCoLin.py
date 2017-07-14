@@ -1,4 +1,4 @@
-'''Brute force search for the following problem: given an N x N
+"""Brute force search for the following problem: given an N x N
 coordinate grid, choose N points such that no two points share a
 horizontal, vertical, or diagonal line.
 
@@ -6,13 +6,14 @@ This problem stumped my girlfriend and I in its 8x8 incarnation at
 OMSI.  This implementation is recursive, and not efficiently so.  Not
 recommended for problems of size N>10.
 
-'''
+"""
 import random
+
 
 def main(n, verbose=False):
     sol = recursive_step([], n, verbose)
     if sol:
-        plot = [ ["_" for x in range(n)] for y in range(n) ]
+        plot = [["_" for x in range(n)] for y in range(n)]
         for point in sol:
             plot[point[0]][point[1]] = "x"
         for line in plot:
@@ -20,7 +21,7 @@ def main(n, verbose=False):
     else:
         print("No solution found.")
 
-#%%
+
 def recursive_step(sol, n, verbose=False):
     if len(sol) == n:
         if verbose:
@@ -32,9 +33,9 @@ def recursive_step(sol, n, verbose=False):
 
     X_sol = [i[0] for i in sol]
     Y_sol = [i[1] for i in sol]
-    X_rem = [i for i in range(n) if not i in X_sol]
-    Y_rem = [i for i in range(n) if not i in Y_sol]
-    Pool = [(x,y) for x in X_rem for y in Y_rem]
+    X_rem = [i for i in range(n) if i not in X_sol]
+    Y_rem = [i for i in range(n) if i not in Y_sol]
+    Pool = [(x, y) for x in X_rem for y in Y_rem]
     random.shuffle(Pool)
     if verbose:
         print("Point pool:", Pool)
@@ -44,7 +45,8 @@ def recursive_step(sol, n, verbose=False):
             return ret
     return []
 
-#%%        
+
+# %%
 def evaluate(sol, verbose=False):
     Xs = [i[0] for i in sol]
     for x in Xs:
@@ -72,7 +74,11 @@ def evaluate(sol, verbose=False):
             if verbose:
                 print("Backslash detected.")
             return False
-    
+
     if verbose:
         print("No line conflicts detected.")
     return True
+
+
+if __name__ == "__main__":
+    main(8)

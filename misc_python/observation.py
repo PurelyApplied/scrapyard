@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from tabulate import tabulate
 
+
 def get_data_per_inst(df, label, n_PIDs, normalization=1):
     retval = sum(
         df[label][df.PID == i].values / normalization
@@ -9,16 +10,17 @@ def get_data_per_inst(df, label, n_PIDs, normalization=1):
     # print(type(retval))
     return retval
 
+
 class Observation:
     def __init__(self, filename):
         self.filename = filename
-        self.CSV = pd.read_csv(filename).rename(columns=lambda x:x.strip())
+        self.CSV = pd.read_csv(filename).rename(columns=lambda x: x.strip())
         self.num_compartments = max(self.CSV.PID) + 1
         self.N = get_data_per_inst(self.CSV, "n_local_nodes", self.num_compartments)[0]
         self.data = {}
 
         self.make_observations()
-        
+
     def __repr__(self):
         return "<Observation from file: {}>".format(self.filename)
 
@@ -33,7 +35,7 @@ class Observation:
             for i in range(n_PIDs))
         # print(type(retval))
         return retval
-    
+
     def display_tables(self):
         assert self.data, "Data not gathered yet."
         print(tabulate(self.data, headers="keys"))
@@ -65,7 +67,7 @@ class Observation:
         inf_redundant = get_it("cntr_inf_messages_redundant")
         upd_redundant = get_it("cntr_updating_messages_redundant")
         transmissions = get_it('cntr_transmission_messages_effective')
-        
+
         #####
         # Computed from data
         computed_first_order_updates = total_updates - cascades
@@ -74,13 +76,13 @@ class Observation:
         overhead_with_redundancies = messages_theoretically_sent - messages_not_ignored + inf_redundant + upd_redundant
         overhead_without_redundancies = messages_theoretically_sent - messages_not_ignored
         effective_transmissions = transmissions + inf_redundant
-        
+
         self.data.update({
             "infected": infected,
-            "effective_transmission" : effective_transmissions,
+            "effective_transmission": effective_transmissions,
             "total_updates": total_updates,
             "cascades": cascades,
-            #"off_thread_cascades": off_thread_cascades,
+            # "off_thread_cascades": off_thread_cascades,
             "messages_sent": messages_sent,
             "messages_skip": messages_skip,
             "messages_not_ignored": messages_not_ignored,

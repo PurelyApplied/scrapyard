@@ -1,23 +1,23 @@
 #!/usr/bin/python3
 
 from partitioning import Partitioning
-from math import log
 import logging
+from matplotlib import pyplot as plt
 
 def get_index_communities(n, n_comm):
     '''Returns SBM-style community blocks.'''
     width = n // n_comm
-    return [set(range(i * width, (i+1) * width)) for i in range(n_comm)]
+    return [set(range(i * width, (i + 1) * width)) for i in range(n_comm)]
 
-def infer_index_communities(P : Partitioning):
+
+def infer_index_communities(P: Partitioning):
     '''Returns SBM-style community blocks after inferring agent and community count.'''
     return get_index_communities(P.vertices(), len(P.part))
 
 
-
 def rmat_communities(n, minimum_size=1,
-                     num_initial_division : "0 means the whole graph is the first 'community'" =0):
-    current_community_count = 2**num_initial_division
+                     num_initial_division: "0 means the whole graph is the first 'community'" = 0):
+    current_community_count = 2 ** num_initial_division
     communities = []
     logging.debug('n = {}, min size = {}, initial division = {}'.format(n, minimum_size, num_initial_division))
     while minimum_size <= n // current_community_count:
@@ -42,6 +42,7 @@ def write_communities(Cs, filename, separator=" ", width=1):
     else:
         print(buff)
 
+
 def load_communities(filename, seperator=None, target_type=int):
     '''seperator=" " breaks on formatted multispaces.  None provides
 standard behavior of split() on whitespace.'''
@@ -51,18 +52,19 @@ standard behavior of split() on whitespace.'''
             for line in s
             if line.strip() and line.strip()[0] != "#"]
 
+
 ####################
 ## My graph generation scripts below.
 
 
 ## Old good graph functions
 def draw_comm_count_test(df, back_style="--", col='score', outfile=None, annotate=True, **kwargs):
-    plt.figure(figsize=(12,8))
+    plt.figure(figsize=(12, 8))
     for i in range(1, 7):
         plt.subplot(2, 3, i)
-        k = 2**i
+        k = 2 ** i
         df_to_plot_over_replicate(
-            df[df.generator=="simple-er-{}".format(k)],
+            df[df.generator == "simple-er-{}".format(k)],
             col,
             back_style=back_style,
             outfile=None, show=False,
@@ -70,7 +72,6 @@ def draw_comm_count_test(df, back_style="--", col='score', outfile=None, annotat
             **kwargs)
     if outfile:
         plt.savefig(outfile)
-
 
 
 def full_draw_code_test(df, back_style='--', col='score', **kwargs):

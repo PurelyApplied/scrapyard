@@ -11,14 +11,24 @@ H_BRIDGE_2 = u'\u1234'
 BLANK = '.'
 
 
-def get_ascii(count, direction=None):
-    if count == 0:
-        return BLANK
-    if count == 1:
-        return V_BAR if direction in (DIRECTION.N, DIRECTION.S) else H_BRIDGE
-    if count == 2:
-        return V_BAR_2 if direction in (DIRECTION.N, DIRECTION.S) else H_BRIDGE_2
-    raise RuntimeError("Count and direction `!r}`, `{!r}` invalid".format(count, direction))
+class Bridge:
+    def __init__(self, direction, island_1, island_2):
+        self.direction = direction
+        self.island_1 = island_1
+        self.island_2 = island_2
+        self.weight = 0
+
+    def __add__(self, other):
+        self.weight += other
+
+    def __str__(self):
+        if self.weight == 0:
+            return BLANK
+        if self.weight == 1:
+            return V_BAR if self.direction in (DIRECTION.N, DIRECTION.S) else H_BRIDGE
+        if self.weight == 2:
+            return V_BAR_2 if self.direction in (DIRECTION.N, DIRECTION.S) else H_BRIDGE_2
+        raise RuntimeError("Count and direction `!r}`, `{!r}` invalid".format(self.weight, self.direction))
 
 
 def main(puzzle, show_work=True):
@@ -29,10 +39,12 @@ def main(puzzle, show_work=True):
 
 
 class Hashi:
-    def __init__(self):
+    def __init__(self, dims=(None, None), *islands):
         self.islands = {}
         self.iterations = 0
         self.dims = (None, None)
+        for island in islands:
+            self._add_island(island)
 
     def __repr__(self):
         return '<Hashi puzzle>'
@@ -84,13 +96,9 @@ class HashiIsland:
         return '<HashiIsland {}>'.format(self.position)
 
 
-print('2===4\n'
-      '|   ║\n'
-      '2---3')
-
 if __name__ == '__main__':
     tst = ('2...3\n'
            '....1\n'
            '1....')
     hashi = Hashi.from_string(tst)
-    print()
+    print(hashi)
