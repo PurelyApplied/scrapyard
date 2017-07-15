@@ -8,7 +8,7 @@ https://www.hackerrank.com/challenges/password-cracker/problem"""
 
 # Tests could themselves ju
 from functools import lru_cache
-
+from sys import stdin
 
 def get_example():
     return ((("because", "can", "do", "must", "we", "what"), "wedowhatwemustbecausewecan"),
@@ -17,20 +17,29 @@ def get_example():
 
 
 def condescendingly_get_input():
-    input("Enter anything.  This line is ignored. >> ")
-    input("This, too, will be ignored.  See if I care. >> ")
+    # Hackerrank kind of sucks for I/O
+    text = stdin.read()
+    return parse_input(text)
+
+
+def parse_input(text):
+    # Ignore the first line
+    big_line_list = text.split('\n')[1:]
     things = []
-    try:
-        while True:
-            passwords = input("Space separated passwords: ").split()
-            attempt = input("Something to attempt: ")
-            things.append((passwords, attempt))
-    except Exception:
-        return things
+    it = iter(big_line_list)
+    for _, p, att in zip(it, it, it):
+        # ignore the first line, split the second, and store the third
+        passwords = p.strip().split()
+        attempt = att.strip()
+        things.append((passwords, attempt))
+        # print("Passwords:", passwords)
+        # print("Attempt: ", attempt)
+    return things
+
 
 def main(tests):
     solutions = [check_password(*t) for t in tests]
-    print("Begin solutions:\n\n    ")
+    # print("Begin solutions:\n\n    ")
     for s in solutions:
         if not s:
             print("WRONG PASSWORD")
@@ -41,8 +50,8 @@ def main(tests):
 def check_password(password_list, password):
     """Returns a list of strings $R contained in $password_list such that "".join($R) = $password.
     If no such list exists, returns an empty list."""
-    print("Password list: {}".format(password_list))
-    print("Attempt: {}".format(password))
+    # print("Password list: {}".format(password_list))
+    # print("Attempt: {}".format(password))
     attempt = recursive_step(password_list, password, [])
     return attempt if attempt is not None else []
 
@@ -62,4 +71,4 @@ def recursive_step(password_list, password, current):
 
 
 if __name__ == "__main__":
-    main(get_example())
+    main(condescendingly_get_input())
