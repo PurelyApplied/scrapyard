@@ -1,3 +1,8 @@
+#!/usr/bin/env python3
+
+# In response to
+# https://www.reddit.com/r/learnpython/comments/6osj8l/help_improving_code_python3/
+
 import random
 import time
 
