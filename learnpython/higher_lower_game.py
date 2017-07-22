@@ -7,14 +7,6 @@ import random
 import time
 
 
-def print_guesses_left(guesses_made, guesses_allowed):
-    guesses_left = guesses_allowed - guesses_made
-    if guesses_left == 1:
-        print("You're on your last guess!")
-    else:
-        print("You have {} guesses left.".format(guesses_left))
-
-
 def number_game(low=1, high=100, guesses_allowed=10):
     target_number = random.randint(low, high)
     print_greeting(low, high, guesses_allowed)
@@ -26,6 +18,14 @@ def number_game(low=1, high=100, guesses_allowed=10):
         report_guess(guess, target_number)
         guesses_made += 1
     print_exit(guess, target_number, guesses_made)
+
+
+def print_guesses_left(guesses_made, guesses_allowed):
+    guesses_left = guesses_allowed - guesses_made
+    if guesses_left == 1:
+        print("You're on your last guess!")
+    else:
+        print("You have {} guesses left.".format(guesses_left))
 
 
 def get_guess():
