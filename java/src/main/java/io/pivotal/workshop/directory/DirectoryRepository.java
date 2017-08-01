@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import io.pivotal.workshop.directory.annotation.Audit;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -39,6 +40,7 @@ public class DirectoryRepository {
 
   }
 
+  @Audit
   private Optional<Student> findByEmail(String email) {
     return directory.stream().filter(s -> s.getEmail().equalsIgnoreCase(email)).findFirst();
   }
