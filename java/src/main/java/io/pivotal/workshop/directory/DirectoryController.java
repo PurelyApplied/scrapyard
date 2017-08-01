@@ -40,7 +40,7 @@ public class DirectoryController {
   }
 
 
-  @Audit(Auditor.BEFORE_AND_AFTER)
+  @Audit
   @RequestMapping("/directory/search")
   public ResponseEntity<?> searchByEmail(@RequestParam String email) {
     return repo.searchByEmail(email);

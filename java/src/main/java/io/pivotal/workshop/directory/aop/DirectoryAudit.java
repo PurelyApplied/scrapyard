@@ -10,8 +10,10 @@ import org.slf4j.LoggerFactory;
 
 import io.pivotal.workshop.directory.annotation.Audit;
 import io.pivotal.workshop.directory.config.DirectoryProperties;
+import org.springframework.stereotype.Component;
 
 @Aspect
+@Component
 public class DirectoryAudit {
 
   private DirectoryProperties props;
@@ -20,7 +22,7 @@ public class DirectoryAudit {
     this.props = props;
   }
 
-  private static Logger log = LoggerFactory.getLogger("[AUDIT]");
+  private static Logger log = LoggerFactory.getLogger("[D-AUDIT]");
 
   @Around("execution(* *(..)) && @annotation(audit)")
   public Object audit(ProceedingJoinPoint jp, Audit audit) throws Throwable {

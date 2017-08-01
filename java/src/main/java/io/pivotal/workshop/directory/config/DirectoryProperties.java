@@ -1,7 +1,9 @@
 package io.pivotal.workshop.directory.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
+@Component
 @ConfigurationProperties(prefix = "directory")
 public class DirectoryProperties {
 

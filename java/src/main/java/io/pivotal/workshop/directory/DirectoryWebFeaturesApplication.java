@@ -1,17 +1,14 @@
 package io.pivotal.workshop.directory;
 
-import java.io.PrintStream;
 import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.boot.Banner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.env.Environment;
 
 @SpringBootApplication
 public class DirectoryWebFeaturesApplication {
@@ -19,7 +16,7 @@ public class DirectoryWebFeaturesApplication {
   public static void main(String[] args) {
 
     SpringApplication app = new SpringApplication(DirectoryWebFeaturesApplication.class);
-//    app.setBannerMode(Banner.Mode.OFF);
+    app.setBannerMode(Banner.Mode.OFF);
 //    app.setWebEnvironment(false);
     app.run(args);
   }
