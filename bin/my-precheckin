@@ -1,0 +1,7 @@
+if [ "${GEMFIRE_DEPLOYMENTS_ROOT}" == "" ] ; then
+    echo "Cannot run $0 without GEMFIRE_DEPLOYMENTS_ROOT defined."
+    exit 2
+fi
+
+GREP_TERM="prhomberg"
+${GEMFIRE_DEPLOYMENTS_ROOT}/precheckin/list_developer_pipelines.sh | sed "s/\\(${GREP_TERM}.*\\)/>>>>> \\1 <<<<</"
