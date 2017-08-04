@@ -1,0 +1,39 @@
+set -e
+
+ROOT_NAME=$(git name)
+echo "Here is all your deadwood from this branch:"
+git branch | grep $(git name)\.
+
+for f in $(git branch | grep $(git name)\.) ; do
+    if [ "$f" == $ROOT_NAME ] ; then
+        echo "(Skipping $f until the last...)"
+        continue
+    fi
+
+    yn="n"
+    echo "Aggressively destroy branch '${f}'?"
+    printf "(y/n) >> "
+    read yn
+    if [ $yn == "y" ] ; then
+        git branch -D $f
+    fi
+done
+
+echo ">> PAY ATTENTION NOW <<"
+
+yn="n"
+echo "Less-aggressively destroy branch '$ROOT_NAME'?"
+printf "(y/n) >> "
+read yn
+if [ $yn == "y" ] ; then
+    git branch -d $ROOT_NAME
+fi
+
+yn="n"
+echo "Push the pruning to git fork?"
+printf "(y/n) >> "
+read yn
+if [ $yn == "y" ] ; then
+    git push --prune --all
+fi
+

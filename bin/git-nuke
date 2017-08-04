@@ -1,0 +1,19 @@
+echo "Resetting hard.  Run-plan:"
+echo
+echo "$> git reset HEAD --hard"
+echo "$> git clean -df"
+echo
+echo "Confirm this sequence."
+printf "(y/n) >> "
+read yn
+
+if [ ${yn} == "y" ] ; then
+    git reset HEAD
+    git checkout .
+    git clean -df
+else
+    echo "Backing out."
+fi
+
+
+        

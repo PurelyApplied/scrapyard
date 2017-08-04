@@ -1,0 +1,11 @@
+echo "Resetting to commit shared with 'develop'."
+echo "Confirm?"
+printf "(y/n) >> "
+read yn
+
+if [ ${yn} == "y" ] ; then
+    git reset $(git merge-base develop $(git name))
+    git add *java
+else
+    echo "Backing out."
+fi
