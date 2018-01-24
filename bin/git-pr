@@ -1,0 +1,16 @@
+
+defaultRepo=$(git config pr.default-remote || echo "[none]")
+usage () {
+    echo "Usage:"
+    echo "git pr [pull number] [remote]"
+    echo "Checkous out the given PR to the branch pr/[num]"
+    echo "A default repository may be set with 'git config --add pr.default-remote [remote]'"
+    echo "Current default: ${defaultRepo}"
+}
+
+if [ $# -eq 0 -o $# -eq 1 -a "${defaultRepo}" == "[none]" ] ; then
+    usage
+    exit 1
+fi
+
+git fetch -fu ${2:-${defaultRepo}} refs/pull/$1/head:pr/$1 && git checkout pr/$1
