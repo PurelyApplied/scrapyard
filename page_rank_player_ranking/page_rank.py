@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 import logging
+from typing import List
+
 import networkx as nx
 
-from page_rank_player_ranking.player import Player
+from page_rank_player_ranking.game_classes import Player, Match
 
 INFO = 'info'
 RANK = 'ranking'
@@ -34,48 +36,30 @@ def page_iteration(g: nx.Graph):
             total_games = g.node[sink][INFO].games_played
             games_lost_to_sink = g[source][sink][MATCH_HISTORY][sink]
             g.node[sink][RANK] += g.node[source][PREV_RANK] * games_lost_to_sink / total_games
-    pass
 
 
-class MatchupHistory:
-    next_identifier = 0
-    DRAWS = "draws"
+def match_to_edge(m: Match):
+    """Match m between u and v to (u, v, m), as suitable for input to g.add_edge"""
+    return m.player_a, m.player_b, m
 
-    def __init__(self, player1, player2, player1_wins, player2_wins, draws=0, identifier=None):
-        self.player1 = player1
-        self.player2 = player2
-        self.wins = {player1: player1_wins, player2: player2_wins, MatchupHistory.DRAWS: draws}
-        self.id = identifier if identifier is not None else MatchupHistory.iterate_id()
 
-    @classmethod
-    def iterate_id(cls):
-        id_value = cls.next_identifier
-        cls.next_identifier += 1
-        return id_value
+def matches_to_edgelist(ms: List[Match]):
+    return [match_to_edge(m) for m in ms]
 
-    def __getitem__(self, item):
-        return self.wins[item]
-
-    def __repr__(self):
-        return (f"<MatchupHistory({self.player1}, {self.player2}, {self[self.player1]}, {self[self.player2]}, "
-                f"{self[DRAWS]}, {self.id}>")
-
-    def __str__(self):
-        return f"<'{self.player1}' {self[self.player1]} - {self[self.player2]} '{self.player2}'>"
 
 if __name__ == '__main__':
     logging.getLogger('').setLevel(logging.DEBUG)
     g = nx.Graph()
-    g.add_node(1, {INFO: Player(1, 3), RANK: 0.5, PREV_RANK: 0.5})
-    g.add_node(2, {INFO: Player(2, 3), RANK: 0.5, PREV_RANK: 0.5})
-    g.add_node(3, {INFO: Player(3, 3), RANK: 0.5, PREV_RANK: 0.5})
-    g.add_node("A", {INFO: Player("A", 1), RANK: 0.5, PREV_RANK: 0.5})
+    players = [Player(), Player(), Player(), Player()]
+    g.add_nodes_from(players)
+    matches = [
+        Match(players[0], players[1], (1, 0)),
+        Match(players[0], players[2], (1, 0)),
+        Match(players[0], players[3], (1, 0)),
+        Match(players[1], players[3], (1, 0)),
+        Match(players[3], players[2], (1, 0)),
+        ]
+    g.add_weighted_edges_from(matches_to_edgelist(matches), weight=MATCH_HISTORY)
 
-    g.add_weighted_edges_from([
-        (1, "A", MatchupHistory(1, "A", 0, 1)),
-        (1, 3, MatchupHistory(1, 3, 0, 1)),
-        (2, 1, MatchupHistory(2, 1, 0, 1)),
-        (2, 3, MatchupHistory(2, 3, 0, 1)),
-        (3, 2, MatchupHistory(3, 2, 0, 1))], weight=MATCH_HISTORY)
     page_iteration(g)
     pass
