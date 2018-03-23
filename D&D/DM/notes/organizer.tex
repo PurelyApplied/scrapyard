@@ -1,0 +1,45 @@
+\documentclass{report}
+
+\usepackage[left=1in,top=1in,right=1in,nohead]{geometry}
+\usepackage{hyperref} % makes ToC clickable
+\usepackage{eso-pic} % allows background picture patterning
+\usepackage{graphicx} % \includegraphics
+
+\usepackage{color} % Color DM only stuff
+\usepackage{fancyhdr} % Footnote the date
+
+\hypersetup{
+  colorlinks,
+  linktoc=all,
+  linkcolor=blue,
+  urlcolor=black
+}
+
+\newif\ifdm
+\dmtrue
+\newcommand{\dmonly}[1]{\ifdm{\color{blue}\textit{[DM Only:]} #1}\else{}\fi}
+
+\newcommand{\headeritem}[2]{\newline\textbf{#1:} #2}
+
+\newcommand{\race}[1]{\headeritem{Race}{#1}}
+\newcommand{\class}[1]{\headeritem{Class}{#1}}
+\newcommand{\voice}[1]{\headeritem{Voice}{#1}}
+\newcommand{\player}[1]{\headeritem{Player}{#1}}
+
+\begin{document}
+
+  \dmonly{{\LARGE
+    This is the DM copy.
+    If you're a player, this will have spoilers.
+  }}
+
+  \AddToShipoutPictureBG{\includegraphics{parchment-paper-light-texture.png}}
+
+  \tableofcontents
+
+  \include{locations/main}
+  \include{player-characters/main}
+  \include{characters/main}
+  \include{story/main}
+
+\end{document}
