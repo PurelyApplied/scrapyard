@@ -7,7 +7,9 @@
 \usepackage{graphicx} % \includegraphics
 \usepackage[left=1in,top=1in,right=1in,nohead]{geometry}
 \usepackage{color} % Color DM only stuff
-
+\usepackage{etoolbox} % \ifdef / \ifundef for setting
+\usepackage{fp} % For simple arithmetic / mod calculation
+\usepackage{amsmath}
 \hypersetup{
   colorlinks,
   linktoc=all,
@@ -17,6 +19,7 @@
 
 \newif\ifdm
 \dmtrue
+
 \newcommand{\dmonly}[1]{\ifdm{\color{blue}\textit{[DM Only:]} #1}\else{}\fi}
 
 \newcommand{\headeritem}[2]{\newline\textbf{#1:} #2}
@@ -25,6 +28,31 @@
 \newcommand{\class}[1]{\headeritem{Class}{#1}}
 \newcommand{\voice}[1]{\headeritem{Voice}{#1}}
 \newcommand{\player}[1]{\headeritem{Player}{#1}}
+
+\newcommand{\STR}[1]{\newcommand{\StrVal}{#1}}
+\newcommand{\DEX}[1]{\newcommand{\DexVal}{#1}}
+\newcommand{\CON}[1]{\newcommand{\ConVal}{#1}}
+\newcommand{\INT}[1]{\newcommand{\IntVal}{#1}}
+\newcommand{\WIS}[1]{\newcommand{\WisVal}{#1}}
+\newcommand{\CHA}[1]{\newcommand{\ChaVal}{#1}}
+
+\newcommand{\modOf}[1]{%
+\FPupn\unrounded{10.1 #1 - 2 swap /}%
+\FPround\rounded\unrounded0%
+\FPclip\result\rounded%
+\FPifneg\result{\texttt{-}}\else{\texttt{+}}%
+\result
+}
+\newcommand{\reset}{
+  \def\StrVal\undefined
+  \def\DexVal\undefined
+  \def\ConVal\undefined
+  \def\IntVal\undefined
+  \def\WisVal\undefined
+  \def\ChaVal\undefined
+}
+
+% \newenvironment{character}{
 
 \begin{document}
 
