@@ -29,20 +29,28 @@
 \newcommand{\voice}[1]{\headeritem{Voice}{#1}}
 \newcommand{\player}[1]{\headeritem{Player}{#1}}
 
-\newcommand{\STR}[1]{\newcommand{\StrVal}{#1}}
-\newcommand{\DEX}[1]{\newcommand{\DexVal}{#1}}
-\newcommand{\CON}[1]{\newcommand{\ConVal}{#1}}
-\newcommand{\INT}[1]{\newcommand{\IntVal}{#1}}
-\newcommand{\WIS}[1]{\newcommand{\WisVal}{#1}}
-\newcommand{\CHA}[1]{\newcommand{\ChaVal}{#1}}
+\newcommand{\STR}[1]{\renewcommand{\StrVal}{#1}}
+\newcommand{\DEX}[1]{\renewcommand{\DexVal}{#1}}
+\newcommand{\CON}[1]{\renewcommand{\ConVal}{#1}}
+\newcommand{\INT}[1]{\renewcommand{\IntVal}{#1}}
+\newcommand{\WIS}[1]{\renewcommand{\WisVal}{#1}}
+\newcommand{\CHA}[1]{\renewcommand{\ChaVal}{#1}}
+
+\newcommand{\statblock}[6]{\STR{#1}\DEX{#2}\CON{#3}\INT{#4}\WIS{#5}\CHA{#6}}
 
 \newcommand{\modOf}[1]{%
 \FPupn\unrounded{10.1 #1 - 2 swap /}%
 \FPround\rounded\unrounded0%
 \FPclip\result\rounded%
-\FPifneg\result{\texttt{-}}\else{\texttt{+}}%
-\result
+\FPifneg\result{%
+\FPabs\absresult\result%
+\FPround\rounded\absresult0%
+\FPclip\newresult\rounded%
+\texttt{-}\newresult%
+}\else{%
+\texttt{+}\result}\fi%
 }
+
 \newcommand{\reset}{
   \def\StrVal\undefined
   \def\DexVal\undefined
@@ -52,7 +60,22 @@
   \def\ChaVal\undefined
 }
 
-% \newenvironment{character}{
+\newcommand{\makeCharacterHeader}{%
+  \begin{tabular}{cccccc}
+    \stackrel{STR}{\StrVal(\modOf{\StrVal})} &
+    \stackrel{DEX}{\DexVal(\modOf{\DexVal})} &
+    \stackrel{CON}{\ConVal(\modOf{\ConVal})} &
+    \stackrel{INT}{\IntVal(\modOf{\IntVal})} &
+    \stackrel{WIS}{\WisVal(\modOf{\WisVal})} &
+    \stackrel{CHA}{\ChaVal(\modOf{\ChaVal})}
+  \end{tabular}
+}
+
+% \newenvironment{name}[args][default]{before}{after}
+\newenvironment{character}[1]{
+  \section{#1}
+}{\reset}
+
 
 \begin{document}
 
