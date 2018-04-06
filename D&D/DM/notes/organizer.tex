@@ -8,6 +8,9 @@
 \usepackage[left=1in,top=1in,right=1in,nohead]{geometry}
 % \usepackage{color} % Color DM only stuff
 \usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage{multicol}
+\usepackage{tipa} % Ezh = \textyogh
 \usepackage{etoolbox} % \ifdef / \ifundef for setting
 \usepackage{fp} % For simple arithmetic / mod calculation
 \usepackage{amsmath}
@@ -73,6 +76,15 @@
 }
 
 % \newenvironment{name}[args][default]{before}{after}
+\newenvironment{aloud}{%
+\begin{quote}%
+\begin{it}%
+\begin{mdframed}[backgroundcolor=blue!10]
+}{%
+\end{mdframed}%
+\end{it}%
+\end{quote}%
+}
 \newenvironment{character}[1]{
   \section{#1}
 }{\reset}
