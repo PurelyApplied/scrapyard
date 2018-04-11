@@ -14,6 +14,7 @@
 \usepackage{etoolbox} % \ifdef / \ifundef for setting
 \usepackage{fp} % For simple arithmetic / mod calculation
 \usepackage{amsmath}
+\usepackage{textcomp} % \textrightarrow
 \hypersetup{
   colorlinks,
   linktoc=all,
@@ -24,7 +25,7 @@
 \newif\ifdm
 \dmtrue
 
-\newcommand{\dmonly}[1]{\ifdm{\color{blue}\hrulefill\textit{DM Only} #1 \hrulefill}\else{}\fi}
+\newcommand{\dmonly}[1]{\ifdm{\color{blue}\hrulefill\par\textit{DM Only} #1\par\hrulefill}\else{}\fi}
 
 \newcommand{\headeritem}[2]{\newline\textbf{#1:} #2}
 
