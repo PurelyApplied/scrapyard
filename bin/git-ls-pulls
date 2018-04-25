@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 if [ $(git config ls.default-remote) ] ; then
     defaultRemoteHost=$(git config ls.default-remote)
 else
@@ -5,24 +7,24 @@ else
 fi
 
 usage () {
-    echo "Usage:"
-    echo "git ls-pulls [remote=${defaultRemoteHost}]"
+    echo "Usage: 'git ls-pulls [remote]'"
+    echo
     echo "Lists a table of open pull requests on GitHub for the given repository, sorted by author username"
-    echo "Will use 'git config curl.token' to make requests if it is set."
+    echo "Will use 'git config ls.curl-token' to make requests if it is set."
     echo "Not using an API token risks having your requests rejected."
-    echo "Default remote may be configured with 'git config ls.default-remote"
+    echo "A default repository may be set in 'git config ls.default-remote [remote]'"
 }
 
 hostAndRepo=$(git remote show ${1:-${defaultRemoteHost}}  | grep "Fetch URL:" | grep -oE "[^/:]*/[^/]+\.git" | sed "s/\(.*\)\.git/\1/")
-if [ $(git config curl.token) ] ; then
-    curlToken="-u $(git config curl.token)"
+if [ $(git config ls.curl-token) ] ; then
+    curlToken="-u $(git config ls.curl-token)"
 else
     curlToken=""
 fi
 
 makeHeader () {
-    echo author pr last-updated url ;
-    echo "------ -- ------------ ---" ;
+    echo "author pr last-updated url title-beginning" ;
+    echo "------ -- ------------ --- ---------------" ;
 }
 
 getPulls () {
@@ -30,10 +32,7 @@ getPulls () {
 }
 
 parsePulls () {
-    jq '.[] | "\(.user.login) #\(.number) \(.updated_at) \(.html_url)"' | sed 's/"//g'
+    jq 'map(.title |= split(" ")) | .[] | "\(.user.login) #\(.number) \(.updated_at) \(.html_url) \(.title[0])"' | sed 's/"//g'
 }
 
 ( makeHeader ; ( getPulls | parsePulls | sort ) ) | column -t
-
-# For preference, a .gitconfig one-liner
-# ls-pulls = "!f() { { echo author pr last-updated url ; echo \"------ -- ------------ ---\" ; curl $(git curl-token) \"https://api.github.com/repos/apache/geode/pulls\" 2> /dev/null| jq '.[] | \"\\(.user.login) #\\(.number) \\(.updated_at) \\(.html_url)\"' | sed 's/\"//g' | sort ;} | column -t ;} ; f"

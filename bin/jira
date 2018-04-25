@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+openCommand=open
+
+usage () {
+  echo "Usage: $0 [ticket number]"
+  echo "Opens the Apache Geode JIRA for the given ticket number."
+  echo "Calling 'jira 0' instead opens the dashboard."
+  echo "Uses Mac's 'open' command. to open the webpage."
+}
+
+
+if [ $# -ne 1 ]; then
+    usage
+    exit 1
+fi
+
+if [ ${1} -eq 0 ] ; then
+    ${openCommand} "https://issues.apache.org/jira/secure/Dashboard.jspa";
+else
+    ${openCommand} "https://issues.apache.org/jira/browse/GEODE-${1}";
+fi

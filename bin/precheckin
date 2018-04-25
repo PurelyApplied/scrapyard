@@ -1,6 +1,6 @@
 usage () {
     echo "Usage: $0 [-c] [-f] <username> <tag>"
-    echo "Forks current branch to ''<branch name>.<tag>'"
+    echo "Forks current branch to ''<branch name>-<tag>'"
     echo "Clones this branch for precheckin."
     echo "Use -c for closed-side precheckins"
     echo "Use -d to dry run"
@@ -50,7 +50,7 @@ if ! git diff-index --quiet HEAD &> /dev/null ; then
 fi
 
 current_branch=$(git rev-parse --abbrev-ref HEAD)
-target_branch="${current_branch}.${tag}"
+target_branch="${current_branch}-${tag}"
 remote_url=$(git remote get-url ${fork})
 
 

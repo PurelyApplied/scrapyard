@@ -1,0 +1,5 @@
+git pr-clean
+git clean -df
+git gc
+git prune
+git push --all --prune fork
