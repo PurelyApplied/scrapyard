@@ -10,13 +10,16 @@ usage () {
 }
 
 
-if [ $# -ne 1 ]; then
+if [ $# -eq 0 ]; then
     usage
     exit 1
 fi
 
-if [ ${1} -eq 0 ] ; then
-    ${openCommand} "https://issues.apache.org/jira/secure/Dashboard.jspa";
-else
-    ${openCommand} "https://issues.apache.org/jira/browse/GEODE-${1}";
-fi
+while [ $# -ne 0 ] ; do
+    if [ ${1} -eq 0 ] ; then
+        ${openCommand} "https://issues.apache.org/jira/secure/Dashboard.jspa";
+    else
+        ${openCommand} "https://issues.apache.org/jira/browse/GEODE-${1}";
+    fi
+    shift
+done

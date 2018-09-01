@@ -1,38 +1,43 @@
-#!/usr/bin/env bash
 
-if [ $(git config ls.default-remote) ] ; then
-    defaultRemoteHost=$(git config ls.default-remote)
-else
-    defaultRemoteHost=origin
-fi
+python3.7 /Users/prhomberg/workspace/sandbox/git-util/git-ls-pulls.py $@
 
-usage () {
-    echo "Usage: 'git ls-pulls [remote]'"
-    echo
-    echo "Lists a table of open pull requests on GitHub for the given repository, sorted by author username"
-    echo "Will use 'git config ls.curl-token' to make requests if it is set."
-    echo "Not using an API token risks having your requests rejected."
-    echo "A default repository may be set in 'git config ls.default-remote [remote]'"
-}
+# #!/usr/bin/env bash
 
-hostAndRepo=$(git remote show ${1:-${defaultRemoteHost}}  | grep "Fetch URL:" | grep -oE "[^/:]*/[^/]+\.git" | sed "s/\(.*\)\.git/\1/")
-if [ $(git config ls.curl-token) ] ; then
-    curlToken="-u $(git config ls.curl-token)"
-else
-    curlToken=""
-fi
 
-makeHeader () {
-    echo "author pr last-updated url title-beginning" ;
-    echo "------ -- ------------ --- ---------------" ;
-}
+# if [ $(git config ls.default-remote) ] ; then
+#     defaultRemoteHost=$(git config ls.default-remote)
+# else
+#     defaultRemoteHost=origin
+# fi
 
-getPulls () {
-    curl ${curlToken} "https://api.github.com/repos/${hostAndRepo}/pulls" 2> /dev/null
-}
+# usage () {
+#     echo "Usage: 'git ls-pulls [remote]'"
+#     echo
+#     echo "Lists a table of open pull requests on GitHub for the given repository, sorted by author username"
+#     echo "Will use 'git config ls.curl-token' to make requests if it is set."
+#     echo "Not using an API token risks having your requests rejected."
+#     echo "A default repository may be set in 'git config ls.default-remote [remote]'"
+# }
 
-parsePulls () {
-    jq 'map(.title |= split(" ")) | .[] | "\(.user.login) #\(.number) \(.updated_at) \(.html_url) \(.title[0])"' | sed 's/"//g'
-}
+# hostAndRepo=$(git remote show ${1:-${defaultRemoteHost}}  | grep "Fetch URL:" | grep -oE "[^/:]*/[^/]+\.git" | sed "s/\(.*\)\.git/\1/")
+# if [ $(git config ls.curl-token) ] ; then
+#     curlToken="-u $(git config ls.curl-token)"
+# else
+#     curlToken=""
+# fi
 
-( makeHeader ; ( getPulls | parsePulls | sort ) ) | column -t
+# makeHeader () {
+#     echo "author pr last-updated url title-beginning" ;
+#     echo "------ -- ------------ --- ---------------" ;
+# }
+
+# getPulls () {
+#     echo "Curling: curl ${curlToken} \"https://api.github.com/repos/${hostAndRepo}/pulls\" " >&2 
+#     curl ${curlToken} "https://api.github.com/repos/${hostAndRepo}/pulls" 2> /dev/null
+# }
+
+# parsePulls () {
+#     jq 'map(.title |= split(" ")) | .[] | "\(.user.login) #\(.number) \(.updated_at) \(.html_url) \(.title[0])"' | sed 's/"//g'
+# }
+
+# ( makeHeader ; ( getPulls | parsePulls | sort ) ) | column -t

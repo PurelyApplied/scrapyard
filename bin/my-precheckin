@@ -15,6 +15,8 @@ myTag="prhomberg"
 precheckinTarget="precheckin"
 precheckinUrlBase="http://precheckin.gemfire.pivotal.io/teams/main/pipelines/"
 
+clear
+
 for p in $(lspipes | grep "${myTag}" | sort) ; do
     printf "${p}:\n    ${precheckinUrlBase}${p}\n"
     fly -t ${precheckinTarget} js -p ${p}
