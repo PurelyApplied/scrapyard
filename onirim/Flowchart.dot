@@ -1,0 +1,146 @@
+digraph g {
+  graph [concentrate=true,overlap="scale",shape="box",style="rounded,filled"]
+  rankdir=LR
+  node[shape="box",shape="Mrecord",style=filled,penwidth=2,color="black"]
+#  node[shape="box",style="rounded",shape="record"]
+#  edge[penwidth=2,dir=true,arrowhead=diamond]  
+  edge[dir=both,arrowhead=normal,arrowtail=crow]
+  # Style nodes by expansion/core set
+  node[fillcolor="violet"]
+    Spells;Cast_Powerful_Punishment;
+  node[fillcolor="darkgreen"]
+    Trigger_tower;Play_a_tower;Ruin_a_Tower,Ruin_a_Tower2;
+  node[fillcolor="gold"]
+    Use_Incubus;Ready_Incubus;
+  node[fillcolor="cyan"]
+    Trigger_an_escape;
+  node[fillcolor="green"]
+    Trigger_incantation;  
+  node[fillcolor="lightblue"]
+    Happy_Dream;Remove_one_Premonition;Opt2;Opt3;Check_dark_premonitions[label="{{Check Dark Premonitions |[4/5/6] of 8 up, do not redraw}}"];
+  node[fillcolor="coral2"]
+    Draw_a_Denizen;
+    Rally_Denizen[label="{<start> Rally Denizen|{Discard a card from your hand without effect (not a Dead End)|<end>Ready the Denizen}}"];
+    Discard_Denizen;
+    Play_Denizen;
+  node[fillcolor="seagreen"]
+    Spend_a_Failsafe; Trigger_a_Freeing ; Move_Limbo_to_Dreamcatcher ;
+    Overload;
+    
+      
+  node[fillcolor="mediumpurple"]
+  
+  # Subgraph : nightmare
+  # subgraph cluster_0 {
+  #   graph[style=filled,color="grey"];
+    Nightmare;
+    Discard_all;
+    Discard_key ;
+    Limbo_a_door ;
+    Burn_draw_deck ;
+    Cast_Powerful_Punishment[label="Cast_Powerful_Punishment (10/12)"];
+    Use_Incubus;
+    Ruin_a_Tower [label="{<ruin> Ruin a tower |{Destroy a tower | False Destruction: Leave the tower, limbo the Nightmare}}"];
+    Ruin_a_Tower2[label="{Ruin a tower |{Destroy | False Destruction}}"];
+  # };
+  
+  # Subgraph : Core play
+  # subgraph cluster_1{
+  #   graph[style=filled,color="green"];
+    Make_a_play ;
+    Spend_a_Failsafe;
+    Play_a_card; 
+    Trigger_an_escape ;
+    Spells[label="{<cast> Cast a spell |{Parallel Planning (7/9)| Paradoxical Prophecy(5/6) } |<resolve> Resolve }"];
+#    Paradoxical_prophecy;
+#    Parallel_Planning;
+    Ready_Incubus[label="{{<start> Ready Incubus | Draw, limboing Dreams and Doors | Place Location under Incubus | <end> Use two if playing on Hard }}"];
+    Play_Denizen;
+  # };
+  
+  # Subgraph : Discard and triggers
+  # subgraph cluster_2{
+  #   graph[style=filled,color="yellow"];
+    Discard_a_card;
+    Discard_a_Path;
+    Trigger_incantation[label="{{<start> Discard a glyph: Trigger Incantation | Draw top 5 | If there's a door, claim one | <end> Place cards on bottom in any order }}"];
+    Trigger_prophecy[label="{{<start> Discard a key: Trigger Prophecy  | Draw top 5 | Discard one | <end> Place remaining four on top in any order }}"];
+    Trigger_tower[label="{{<start> Discard a tower: Trigger Lookout  | Draw top [3/4/5] |<end> Place back on top in any order }}"];
+  # };
+  
+  # Subgraph : core draw
+  #subgraph cluster_3{
+  #  graph[style=filled,color="pink"];
+    Draw_a_card;
+    Init[label="{Init |{Prepare Deck | If Book of Steps, arrange goal cards | If Denizens, shuffle 8 of 16 denizens into the deck | If Dreamcatchers, shuffle four lost dreams, ready catchers, (on easy:) place failsafes}}"];
+    Draw_new_hand;
+  #};
+
+  # subgraph cluster_3{
+    Happy_Dream;Remove_one_Premonition;Opt2;Opt3;Check_dark_premonitions[label="{{Check Dark Premonitions |[4/5/6] of 8 up, do not redraw}}"];
+    Optional_Freeing2;
+  #   graph[style=filled,color="skyblue"];
+  # };
+
+  #  Make_a_play[label="{Make a play |{Cast a spell |{ Parallel Planning | Paradoxical Prophecy }} | Call the Little Incubus |<esc> Trigger an Escape | Play a Path or Tower | {Discard a card |{ Trigger Prophecy | Trigger Incantation | Trigger Tower }}} "]; 
+  Init -> Draw_new_hand ;
+  Draw_new_hand -> Check_Limbo;
+  Check_Limbo -> Limbo_not_empty -> {Move_Limbo_to_Dreamcatcher; Shuffle_Limbo_into_Deck};
+  Overload[label="{Overload |{ If all dream catchers are full | shuffle *all* cards caught in dreamcatchers into the deck |Discard one dreamcatcher | Lose the game if it's the last one} }"];
+  Move_Limbo_to_Dreamcatcher -> Overload;
+  Overload->Make_a_play;
+  Shuffle_Limbo_into_Deck -> Make_a_play;
+  Check_Limbo->  Limbo_empty -> Make_a_play;
+
+  Make_a_play -> Spend_a_Failsafe -> Trigger_a_Freeing -> Make_a_play;
+  Draw_a_card->  Draw_a_Denizen->{Rally_Denizen:start;Discard_Denizen};
+  Discard_Denizen->Draw_a_card;
+  Rally_Denizen:end->Draw_a_card;
+
+  Make_a_play -> Play_Denizen -> Make_a_play;
+  Make_a_play -> Play_a_card;
+  Make_a_play -> Discard_a_card -> Discard_a_Path -> Draw_a_card;
+  Make_a_play -> Trigger_an_escape -> Draw_new_hand;
+  Make_a_play -> Spells:cast;
+  Spells:resolve -> Make_a_play;
+  #Cast_a_spell -> Paradoxical_prophecy ->  Make_a_play ;
+  #Cast_a_spell -> Parallel_Planning -> Make_a_play ; 
+  Make_a_play -> Ready_Incubus:start;
+  Ready_Incubus:end -> Nightmare;
+  
+
+  Draw_Location[label="{<draw> Draw_Location |{ <five> Five in hand | <less> Less than five in hand}}"];
+  Play_a_card -> Play_to_path -> Check_for_trio -> Draw_a_card;
+  Draw_a_card -> Draw_Location:draw;
+  Draw_Location:five -> Check_Limbo ;
+  Draw_Location:less -> Draw_a_card;
+  Check_for_trio -> Discover_a_door -> Shuffle_deck -> Check_dark_premonitions;
+  Shuffle_deck -> Optional_Freeing->Check_dark_premonitions;
+  Play_a_card -> Play_a_tower -> Draw_a_card;
+  Discard_a_card -> Trigger_prophecy:start
+  Trigger_prophecy:end -> Draw_a_card;
+  Discard_a_card -> Trigger_incantation:start;
+  Trigger_incantation:end -> { Draw_a_card; Check_dark_premonitions }
+  Discard_a_card -> Trigger_tower:start;
+  Trigger_tower:end -> Draw_a_card;
+  Draw_a_card -> Nightmare ;
+  Nightmare -> Discard_all    -> Ruin_a_Tower2 -> Draw_new_hand;
+  Nightmare -> Discard_key    -> Ruin_a_Tower:ruin;
+  Nightmare -> Limbo_a_door   -> Ruin_a_Tower:ruin;
+  Nightmare -> Burn_draw_deck -> Ruin_a_Tower:ruin;
+  Nightmare -> Use_Incubus -> Draw_a_card;
+  Ruin_a_Tower -> Draw_a_card;
+  Nightmare -> Cast_Powerful_Punishment -> Draw_a_card ;
+
+  Draw_a_card -> Happy_Dream;
+  Opt2[label="{{<start> Reveal top 7|Discard as many as you want|<end>Return to top of deck in any order }}"];
+  Opt3[label="{{<start> Search the deck for a card of your choice | <shuf> Shuffle the deck |<end> Place the chosen card on top of the deck}}"];
+  Opt3:start:e -> Optional_Freeing2 -> Opt3:shuf:e;
+  Happy_Dream -> Remove_one_Premonition ->Draw_a_card;
+  Happy_Dream -> Opt2:start;
+  Opt2:end:s -> Draw_a_card;
+  Happy_Dream -> Opt3:start;
+  Opt3:end:s -> Draw_a_card;
+  
+  Draw_a_card -> Draw_a_door -> Resolve_door -> Check_dark_premonitions -> Draw_a_card ;
+}
