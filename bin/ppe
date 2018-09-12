@@ -4,13 +4,15 @@ then
     exit 1
 fi
 
+# I use evince on Linux but "preview" on Mac.
+open_with=$(which evince && echo "evince" || echo "open")
 
 fname=$1
 
 do-ppe () {
-    pdflatex $1tex
-    pdflatex $1tex
-    evince $1pdf &
+    pdflatex $1tex && \
+    pdflatex $1tex && \
+    ${open_with} $1pdf &
 }
 
 usage () {
@@ -20,12 +22,14 @@ usage () {
 }
 
 
+# If provided an actual text file, strip it down first
+this_fname=${fname/.tex//}
 
-if [ -e ${fname}tex ] ; then
-    do-ppe ${fname}
-elif [ -e ${fname}.tex ] ; then
-    do-ppe ${fname}.
+if [ -e ${this_fname}.tex ] ; then
+    do-ppe ${this_fname}.
+elif [ -e ${this_fname}tex ] ; then
+    do-ppe ${this_fname}
 else
-    echo "Cannot find ${fname}tex or ${fname}.tex"
+    echo "Cannot find ${this_fname}tex or ${this_fname}.tex"
     exit 1
 fi

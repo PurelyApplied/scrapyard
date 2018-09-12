@@ -1,7 +1,38 @@
 #!/usr/bin/env python3
 import argparse
 import logging
+import random
 from dataclasses import dataclass
+from typing import List
+
+import matplotlib.pyplot as plt
+
+
+@dataclass
+class Die:
+    die_size: int
+    last_roll: int = None
+
+    def roll(self):
+        self.last_roll = random.randint(1, self.die_size)
+        return self.last_roll
+
+    def __int__(self):
+        return self.last_roll or 0
+
+
+@dataclass
+class Dice:
+    dice: List[Die]
+
+    def roll(self):
+        for d in self.dice:
+            d.roll()
+        return sum(d.last_roll for d in self.dice)
+
+
+class DiceDistribution:
+    pass
 
 
 def determine_distributions_stochastically():
@@ -9,6 +40,7 @@ def determine_distributions_stochastically():
 
 
 def draw_distributions():
+    plt.plot()
     pass
 
 
@@ -24,19 +56,17 @@ def main(args):
     report_distributions()
 
 
-@dataclass
-class Roll:
-    initial_string: str
-
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--roll",
-                        help="The base roll of dice to investigate.",
-                        type=Roll,
-                        required=True
-                        )
+    parser.add_argument("--dice",
+                        action='append',
+                        nargs=2,
+                        type=int,
+                        metavar=('die_size', 'die_count'),
+                        help="Pairs of numbers indicating die-size and number of the specified die size, e.g., "
+                             "'--dice 6 2' will roll 2d6.",
+                        required=True)
     parser.add_argument("--reroll-count",
                         help="Number(s) to investigate for dice to reroll.",
                         type=int,
