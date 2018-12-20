@@ -126,8 +126,10 @@ def to_next_row(l):
     return None if l is None or Statuses.is_end_status(l.status) else l
 
 
-def new_main(filename):
+def new_main(filename, do_sort=False):
     raw_lines = open(filename).readlines()
+    # if do_sort:
+    #     raw_lines.sort()
     progress_entries = [ProgressEntry(i, l) for i, l in enumerate(raw_lines)]
     progress_report = ProgressReport(*progress_entries)
     maximum_concurrent = progress_report.get_maximum_concurrent_tests(True)
@@ -156,7 +158,23 @@ def new_main(filename):
     for lane, (index, this_entry) in zip(tracks, sorted_entry_list):
         lane_chars = [character_and_color(l, this_entry, progress_report) for l in lane]
         print(
-            " ".join(lane_chars) + "   " + colored(this_entry.line_string.strip(), Statuses.to_color(this_entry.status)))
+            " ".join(lane_chars[::-1]) + "   " + colored(this_entry.line_string.strip(), Statuses.to_color(this_entry.status)))
+
+    unended = [info
+               for info in progress_report.test_to_entry_pair_dict.values()
+               if "end" not in info]
+    if unended:
+        print("\nOh no!  The following tests appear to have hung without an 'end' line.")
+        for info in unended:
+            print(f"  {info['start'].line_string}")
+
+    unstarted = [info
+                 for info in progress_report.test_to_entry_pair_dict.values()
+                 if "start" not in info]
+    if unstarted:
+        print("\nOh no!  The following tests appear to have hung without an 'end' line.")
+        for info in unended:
+            print(f"  {info['end'].line_string}")
     return
 
     print(maximum_concurrent)
@@ -304,6 +322,7 @@ def get_available_position(positions: dict):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('progfile', type=str, help='Progress file from a DUnit test run')
+    parser.add_argument('sort', action="store_true", default=False, help='Perform time-sort on input file.')
     args = parser.parse_args()
     # logging.getLogger().setLevel(logging.DEBUG)
-    new_main(args.progfile)
+    new_main(args.progfile, args.sort)
