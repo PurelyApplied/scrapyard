@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+openCommand=open
+
+usage () {
+  echo "Usage: $0 [ticket number]"
+  echo "Opens the GemFire JIRA for the given ticket number."
+  echo "Calling '$0 0' instead opens the dashboard."
+  echo "Uses Mac's 'open' command. to open the webpage."
+}
+
+base_url="https://jira-pivotal.atlassian.net"
+if [ $# -ne 1 ]; then
+    usage
+    exit 1
+fi
+
+if [ ${1} -eq 0 ] ; then
+    ${openCommand} "${base_url}/secure/Dashboard.jspa";
+else
+    ${openCommand} "${base_url}/browse/GEM-${1}";
+fi

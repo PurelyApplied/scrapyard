@@ -1,0 +1,85 @@
+digraph g{
+    node[shape=Mrecord]
+    Card[label="{obj_card|draw_to_hand=false}"]
+    Card -> {
+        Hand_card ;
+        Effect_on_draw ;
+        Utility ;
+    }
+    Hand_card[label="{obj_hand_card|draw_to_hand=true|can_discard=true|effect_on_discard=false}"]
+    Hand_card -> {
+        Path;
+        Tower;
+    }
+    Tower[label="{obj_tower|effect_on_discard=true}"]
+    Effect_on_draw -> {
+        Nightmare;
+        Happy_dream;
+        Lost_Dream;
+        Denizen;
+        Door;
+    }
+    Path[label="{obj_path}"];
+    Path -> {
+        Sun;
+        Moon;
+        Key;
+        Glyph;
+        Dead_end;
+    }
+    Key[label="{obj_key|effect_on_discard=true}"]
+    Glyph[label="{obj_glyph|effect_on_discard=true}"]
+    Dead_end[label="{obj_dead_end|can_discard=false}"];
+    Utility -> {
+        Spells ;
+        Goals ;
+        Little_Incubus ;
+        Failsafe ;
+        Dreamcatcher;
+        Dark_premonition;
+        Escape;
+    }
+    
+    
+    Sphinx;
+    Diver;
+    Confusion;
+
+
+
+}
+    
+
+# Core: Sun, moon, key, door, nightmare
+# Goal, Spells
+# Glyph (door goal)
+# Lost Dream, Dreamcatcher, failsafe
+# Towers
+# Happy Dream, Dark Premonition
+# Multicolor sun/moon/key ; dead end
+# Denizen (door goal)
+# Little incubus
+# [Promo] Sphinx, Diver, Confusion.
+
+# Class structure:
+# Onirim_Card
+# |- Location
+# |  |- Sun  
+# |  |  |-MultiSun  
+# |  |  
+# |  |- Moon 
+# |  |  |-MultiMoon  
+# |  |  
+# |  |- Key  
+# |  |  |-MultiKey  
+# |  |  
+# |  |- Glyph
+# |  |- Dead End
+# |
+# |- Door
+# |- Dream
+# |- |- Nightmare
+# |- |- Good dream ##
+# |
+# |- Tower
+# |- Lost dream
