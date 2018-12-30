@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
+set -x
 
 cd /Applications
-open IntelliJ\ IDEA.app
 open iTerm.app
 open Google\ Chrome.app
-open PyCharm.app
 open Slack.app
-open ShiftIt.app

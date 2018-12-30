@@ -2,4 +2,4 @@ git pr-clean
 git clean -df
 git gc
 git prune
-git push --all --prune fork
+echo "Run 'git push --all --prune fork' to clean your remote."
