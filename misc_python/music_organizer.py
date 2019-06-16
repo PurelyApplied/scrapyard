@@ -1,6 +1,28 @@
 #!/usr/bin/env python3
 
 import os
+import logging
+import sys
+
+
+def getNamedStreamLogger(name, stream):
+    logger = logging.getLogger(name)
+
+    handler = logging.StreamHandler(stream=stream)
+    handler.setLevel(logging.DEBUG)
+
+    logger.addHandler(handler)
+    return logger
+
+
+logger = getNamedStreamLogger(__name__, sys.stderr)
+
+
+class Register:
+    def __init__(self):
+        self.sha_to_files = {}
+        self.big_ass_list_of_full_path_files = []
+
 
 def get_extensions(start='./'):
     extensions = set()
@@ -18,6 +40,7 @@ def get_extensions(start='./'):
                 print("File {!r} has no extension.".format(f))
                 raw.add('{}/{}'.format(root, f))
     return extensions, raw
+
 
 def identify_bad_folders(start, target_extensions, case_sensitive=False):
     bad = set()
